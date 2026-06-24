@@ -1,0 +1,69 @@
+.placeholder-page {
+  min-height: 100vh;
+  background: #f0f2f5;
+}
+
+.placeholder-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding-top: 70px;
+}
+
+.placeholder-card {
+  background: white;
+  border-radius: 16px;
+  padding: 56px 64px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.09);
+  text-align: center;
+  max-width: 480px;
+  width: 100%;
+}
+
+.placeholder-icon {
+  font-size: 52px;
+  margin-bottom: 16px;
+}
+
+.placeholder-section {
+  font-size: 12px;
+  font-weight: 700;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin: 0 0 8px 0;
+}
+
+.placeholder-title {
+  font-size: 26px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0 0 16px 0;
+}
+
+.placeholder-msg {
+  font-size: 14px;
+  color: #6b7280;
+  margin: 0 0 32px 0;
+  line-height: 1.6;
+}
+
+.placeholder-back-btn {
+  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  color: #ffd700;
+  border: 1px solid rgba(255,215,0,0.3);
+  padding: 11px 28px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.placeholder-back-btn:hover {
+  background: linear-gradient(135deg, #ffd700 0%, #ffc700 100%);
+  color: #1a1a2e;
+  border-color: transparent;
+  transform: translateY(-1px);
+}

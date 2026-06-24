@@ -6,6 +6,35 @@ import ClaimsPage from './pages/ClaimsPage'
 import ClaimDetailsPage from './pages/ClaimDetailsPage'
 import NewClaimPage from './pages/NewClaimPage'
 import CatalogsProductsPage from './pages/CatalogsProductsPage'
+import PlaceholderPage from './pages/PlaceholderPage'
+
+const PLACEHOLDER_PAGES = {
+  // Claims
+  'interface-module':    { title: 'Interface Module Management', section: 'Claims' },
+  'auto-close':          { title: 'Auto Close Ticket',           section: 'Claims' },
+  'search-edit-claim':   { title: 'Search - Edit Claim',         section: 'Claims' },
+  'delete-claim':        { title: 'Delete Claim',                section: 'Claims' },
+  'change-claim-owner':  { title: 'Change Claim Owner',          section: 'Claims' },
+  // Catalogs
+  'cat-contacts':        { title: 'Customer Contacts',           section: 'Catalogs' },
+  'cat-mfgs':            { title: 'MFGS Sites',                  section: 'Catalogs' },
+  'cat-distributors':    { title: 'Distributors',                section: 'Catalogs' },
+  'cat-units':           { title: 'Units',                       section: 'Catalogs' },
+  'cat-users':           { title: 'Users',                       section: 'Catalogs' },
+  'cat-root-causes':     { title: 'Root Causes',                 section: 'Catalogs' },
+  'cat-type-issues':     { title: 'Type Of Issues',              section: 'Catalogs' },
+  'cat-regions':         { title: 'Regions',                     section: 'Catalogs' },
+  'cat-activate':        { title: 'Activate Users',              section: 'Catalogs' },
+  'cat-issue-detail':    { title: 'Issue - Issue Detail',        section: 'Catalogs' },
+  // Project Identifier
+  'pi-products':         { title: 'Products',                    section: 'Project Identifier' },
+  'pi-customers':        { title: 'Customers',                   section: 'Project Identifier' },
+  // Reports
+  'report-quick-query':     { title: 'Quick Query',                    section: 'Reports' },
+  'report-powerbi':         { title: 'PowerBi QuickQuery Dashboard',   section: 'Reports' },
+  'report-cs':              { title: 'CS Report',                      section: 'Reports' },
+  'report-catalog-export':  { title: 'Catalog Export',                 section: 'Reports' },
+}
 
 function App() {
   const [user, setUser] = useState(null)
@@ -92,6 +121,17 @@ function App() {
               onLogout={handleLogout}
               onNavigate={handleNavigate}
               currentPage={currentPage}
+            />
+          )}
+
+          {PLACEHOLDER_PAGES[currentPage] && (
+            <PlaceholderPage
+              user={user}
+              onLogout={handleLogout}
+              onNavigate={handleNavigate}
+              currentPage={currentPage}
+              title={PLACEHOLDER_PAGES[currentPage].title}
+              section={PLACEHOLDER_PAGES[currentPage].section}
             />
           )}
         </div>
