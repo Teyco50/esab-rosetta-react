@@ -50,7 +50,7 @@
   gap: 0;
   padding: 8px 16px;
   justify-content: center;
-  height: 420px;
+  height: 378px;
   border-right: 1px solid #f1f5f9;
 }
 
@@ -127,7 +127,7 @@
 
 /* Map */
 .region-map-wrap {
-  height: 420px;
+  height: 378px;
   border-radius: 0 8px 8px 0;
   overflow: hidden;
   background: #f8fafc;

@@ -3,10 +3,10 @@ import TopNavigation from '../components/TopNavigation'
 import { mockClaims, getClaimsByUser } from '../data/mockData'
 import './ClaimsPage.css'
 
-function ClaimsPage({ user, onLogout, onViewDetails, onBackToDashboard, onNavigate, currentPage }) {
+function ClaimsPage({ user, onLogout, onViewDetails, onBackToDashboard, onNavigate, currentPage, initialFilter = 'All' }) {
   const [claims, setClaims] = useState([])
   const [filteredClaims, setFilteredClaims] = useState([])
-  const [statusFilter, setStatusFilter] = useState('All')
+  const [statusFilter, setStatusFilter] = useState(initialFilter)
 
   useEffect(() => {
     const userClaims = getClaimsByUser(user)

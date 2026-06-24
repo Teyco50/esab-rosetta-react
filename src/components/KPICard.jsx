@@ -1,8 +1,8 @@
 import './KPICard.css'
 
-function KPICard({ title, value, icon, gradient, trend, comparison }) {
+function KPICard({ title, value, icon, gradient, trend, comparison, onClick }) {
   return (
-    <div className="kpi-card" style={{ background: `linear-gradient(135deg, ${gradient[0]} 0%, ${gradient[1]} 100%)` }}>
+    <div className="kpi-card" style={{ background: `linear-gradient(135deg, ${gradient[0]} 0%, ${gradient[1]} 100%)` }} onClick={onClick}>
       <div className="kpi-header">
         <span className="kpi-icon">{icon}</span>
       </div>

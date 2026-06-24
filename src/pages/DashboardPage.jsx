@@ -43,6 +43,7 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
             gradient={['#6366f1', '#818cf8']}
             trend={{ positive: true, percent: 12 }}
             comparison="vs last period"
+            onClick={() => onNavigate('claims', 'Open')}
           />
           <KPICard
             title="Closed Claims"
@@ -51,6 +52,7 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
             gradient={['#10b981', '#34d399']}
             trend={{ positive: true, percent: 50 }}
             comparison="vs last period"
+            onClick={() => onNavigate('claims', 'Closed')}
           />
           <KPICard
             title="YTD Claims"
@@ -59,6 +61,7 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
             gradient={['#f59e0b', '#fbbf24']}
             trend={{ positive: false, percent: 8 }}
             comparison="vs last year"
+            onClick={() => onNavigate('claims', 'All')}
           />
           <KPICard
             title="Active Regions"
@@ -67,6 +70,7 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
             gradient={['#8b5cf6', '#a78bfa']}
             trend={{ positive: true, percent: 25 }}
             comparison="worldwide"
+            onClick={() => onNavigate('claims', 'All')}
           />
         </div>
 

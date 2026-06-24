@@ -10,6 +10,7 @@ function App() {
   const [user, setUser] = useState(null)
   const [currentPage, setCurrentPage] = useState('login')
   const [selectedClaimId, setSelectedClaimId] = useState(null)
+  const [claimsFilter, setClaimsFilter] = useState('All')
 
   const handleLogin = (username) => {
     setUser(username)
@@ -20,11 +21,13 @@ function App() {
     setUser(null)
     setCurrentPage('login')
     setSelectedClaimId(null)
+    setClaimsFilter('All')
   }
 
-  const handleNavigate = (page) => {
+  const handleNavigate = (page, filter = 'All') => {
     setCurrentPage(page)
     if (page !== 'details') setSelectedClaimId(null)
+    if (page === 'claims') setClaimsFilter(filter)
   }
 
   const handleViewClaimDetails = (claimId) => {
@@ -56,6 +59,7 @@ function App() {
               onBackToDashboard={() => handleNavigate('dashboard')}
               onNavigate={handleNavigate}
               currentPage={currentPage}
+              initialFilter={claimsFilter}
             />
           )}
 
