@@ -18,45 +18,9 @@ body {
   background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
-.app-with-sidebar {
-  display: flex;
+.app-main {
+  width: 100%;
   min-height: 100vh;
-}
-
-.app-content {
-  flex: 1;
-  margin-left: 250px;
-  margin-top: 64px;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  min-height: calc(100vh - 64px);
-}
-
-.placeholder-page {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: calc(100vh - 64px);
-  padding: 40px 20px;
-  text-align: center;
-}
-
-.placeholder-page h2 {
-  font-size: 32px;
-  color: #1f2937;
-  margin-bottom: 16px;
-}
-
-.placeholder-page p {
-  font-size: 18px;
-  color: #6b7280;
-}
-
-@media (max-width: 768px) {
-  .app-content {
-    margin-left: 0;
-    margin-top: 64px;
-  }
 }
 
 /* Global Button Styles */

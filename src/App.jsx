@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import './App.css'
-import Sidebar from './components/Sidebar'
 import LoginPage from './pages/LoginPage'
 import DashboardPage from './pages/DashboardPage'
 import ClaimsPage from './pages/ClaimsPage'
@@ -25,7 +24,7 @@ function App() {
 
   const handleNavigate = (page) => {
     setCurrentPage(page)
-    setSelectedClaimId(null)
+    if (page !== 'details') setSelectedClaimId(null)
   }
 
   const handleViewClaimDetails = (claimId) => {
@@ -33,74 +32,54 @@ function App() {
     setCurrentPage('details')
   }
 
-  const handleBackToDashboard = () => {
-    setCurrentPage('dashboard')
-    setSelectedClaimId(null)
-  }
-
-  const handleBackToClaims = () => {
-    setCurrentPage('claims')
-    setSelectedClaimId(null)
-  }
-
   return (
     <div className="app">
       {!user ? (
         <LoginPage onLogin={handleLogin} />
       ) : (
-        <div className="app-with-sidebar">
-          <Sidebar currentPage={currentPage} onNavigate={handleNavigate} />
+        <div className="app-main">
+          {currentPage === 'dashboard' && (
+            <DashboardPage
+              user={user}
+              onLogout={handleLogout}
+              onViewClaims={() => handleNavigate('claims')}
+              onNavigate={handleNavigate}
+              currentPage={currentPage}
+            />
+          )}
 
-          <div className="app-content">
-            {currentPage === 'dashboard' && (
-              <DashboardPage
-                user={user}
-                onLogout={handleLogout}
-                onViewClaims={() => handleNavigate('claims')}
-              />
-            )}
+          {currentPage === 'claims' && (
+            <ClaimsPage
+              user={user}
+              onLogout={handleLogout}
+              onViewDetails={handleViewClaimDetails}
+              onBackToDashboard={() => handleNavigate('dashboard')}
+              onNavigate={handleNavigate}
+              currentPage={currentPage}
+            />
+          )}
 
-            {currentPage === 'claims' && (
-              <ClaimsPage
-                user={user}
-                onLogout={handleLogout}
-                onViewDetails={handleViewClaimDetails}
-                onBackToDashboard={handleBackToDashboard}
-              />
-            )}
+          {currentPage === 'details' && (
+            <ClaimDetailsPage
+              user={user}
+              claimId={selectedClaimId}
+              onLogout={handleLogout}
+              onBackToClaims={() => handleNavigate('claims')}
+              onBackToDashboard={() => handleNavigate('dashboard')}
+              onNavigate={handleNavigate}
+              currentPage={currentPage}
+            />
+          )}
 
-            {currentPage === 'details' && (
-              <ClaimDetailsPage
-                user={user}
-                claimId={selectedClaimId}
-                onLogout={handleLogout}
-                onBackToClaims={handleBackToClaims}
-                onBackToDashboard={handleBackToDashboard}
-              />
-            )}
-
-            {currentPage === 'new-claim' && (
-              <NewClaimPage
-                user={user}
-                onLogout={handleLogout}
-                onBackToDashboard={handleBackToDashboard}
-              />
-            )}
-
-            {currentPage === 'reports' && (
-              <div className="placeholder-page">
-                <h2>Reports</h2>
-                <p>Coming soon...</p>
-              </div>
-            )}
-
-            {currentPage === 'settings' && (
-              <div className="placeholder-page">
-                <h2>Settings</h2>
-                <p>Coming soon...</p>
-              </div>
-            )}
-          </div>
+          {currentPage === 'new-claim' && (
+            <NewClaimPage
+              user={user}
+              onLogout={handleLogout}
+              onBackToDashboard={() => handleNavigate('dashboard')}
+              onNavigate={handleNavigate}
+              currentPage={currentPage}
+            />
+          )}
         </div>
       )}
     </div>

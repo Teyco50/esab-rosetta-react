@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import Navigation from '../components/Navigation'
+import TopNavigation from '../components/TopNavigation'
 import KPICard from '../components/KPICard'
 import { LineChart, BarChart, DoughnutChart } from '../components/ChartComponent'
 import { getDashboardStats, getChartData } from '../data/mockData'
 import './DashboardPage.css'
 
-function DashboardPage({ user, onLogout, onViewClaims }) {
+function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }) {
   const [stats, setStats] = useState(null)
   const [chartData, setChartData] = useState(null)
 
@@ -20,7 +20,7 @@ function DashboardPage({ user, onLogout, onViewClaims }) {
 
   return (
     <div className="dashboard">
-      <Navigation user={user} onLogout={onLogout} />
+      <TopNavigation user={user} onLogout={onLogout} onNavigate={onNavigate} currentPage={currentPage} />
 
       <div className="dashboard-container">
         {/* Header */}

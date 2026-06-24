@@ -1,41 +1,26 @@
 import { useState } from 'react'
-import Navigation from '../components/Navigation'
+import TopNavigation from '../components/TopNavigation'
 import './NewClaimPage.css'
 
-function NewClaimPage({ user, onLogout, onBackToDashboard }) {
-  const [step, setStep] = useState(1)
+function NewClaimPage({ user, onLogout, onBackToDashboard, onNavigate }) {
+  const [activeTab, setActiveTab] = useState('ticket-details')
   const [formData, setFormData] = useState({
-    claimType: '',
-    product: '',
-    site: '',
-    reportedBy: '',
+    complaintNumber: 'Auto-generated',
+    urgencyLevel: 'Select a Level',
+    status: 'Draft',
+    created: new Date().toLocaleString(),
+    ginPartNumber: '',
     description: '',
-    invoice: '',
-    shipmentNum: '',
-    priority: 'Medium',
-    attachments: []
+    complaintOwner: 'Administrator',
+    assignedTo: '',
+    qaCoordinator: '',
+    typeOfIssue: 'ESAB Product Quality Issue',
+    requestRMA: 'No',
+    customerRequiresCabBd: 'No',
+    dateOfSale: '',
   })
 
-  const claimTypes = [
-    'Material Defect',
-    'Product Quality',
-    'Delivery Issue',
-    'Technical Support',
-    'Other'
-  ]
-
-  const products = [
-    'Cutting System',
-    'Electrode Wire',
-    'Welding System',
-    'Control Panel',
-    'Filler Metal',
-    'Gas System',
-    'Consumables',
-    'Power Supply'
-  ]
-
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target
     setFormData(prev => ({
       ...prev,
@@ -43,237 +28,239 @@ function NewClaimPage({ user, onLogout, onBackToDashboard }) {
     }))
   }
 
-  const handleNext = () => {
-    if (step < 3) setStep(step + 1)
-  }
-
-  const handleBack = () => {
-    if (step > 1) setStep(step - 1)
-  }
-
-  const handleSubmit = () => {
-    console.log('New Claim Submitted:', formData)
-    alert('Claim created successfully!')
-    onBackToDashboard()
-  }
+  const tabs = [
+    { id: 'ticket-details', label: 'TICKET DETAILS' },
+    { id: 'analysis', label: 'ANALYSIS' },
+    { id: 'corrective-action', label: 'CORRECTIVE ACTION' },
+    { id: 'customer-notification', label: 'CUSTOMER NOTIFICATION' },
+    { id: 'assigned-tasks', label: 'ASSIGNED TASKS' },
+    { id: 'dates-history', label: 'DATES & HISTORY' },
+    { id: 'general-comments', label: 'GENERAL COMMENTS' }
+  ]
 
   return (
     <div className="new-claim-page">
-      <Navigation user={user} onLogout={onLogout} />
+      <TopNavigation user={user} onLogout={onLogout} onNavigate={onNavigate} currentPage="new-claim" />
 
-      <div className="new-claim-container">
-        <div className="new-claim-header">
+      <div className="new-claim-content">
+        {/* Header */}
+        <div className="claim-header">
           <button className="back-btn" onClick={onBackToDashboard}>← Back to Dashboard</button>
-          <h2>Create New Claim</h2>
+          <div className="header-title-section">
+            <h1>New Claim - Product Quality Issue</h1>
+            <button className="download-pdf-btn">Download PDF</button>
+          </div>
         </div>
 
-        {/* Progress Steps */}
-        <div className="progress-steps">
-          {[1, 2, 3].map(s => (
-            <div
-              key={s}
-              className={`step ${step === s ? 'active' : ''} ${step > s ? 'completed' : ''}`}
-              onClick={() => s <= step && setStep(s)}
-            >
-              <div className="step-number">{s}</div>
-              <div className="step-label">
-                {s === 1 && 'Basic Info'}
-                {s === 2 && 'Details'}
-                {s === 3 && 'Review'}
+        {/* Tabs */}
+        <div className="tabs-section">
+          <div className="tabs-header">
+            {tabs.map(tab => (
+              <button
+                key={tab.id}
+                className={`tab-btn ${activeTab === tab.id ? 'active' : ''}`}
+                onClick={() => setActiveTab(tab.id)}
+              >
+                {tab.label}
+              </button>
+            ))}
+          </div>
+
+          {/* Tab Content */}
+          <div className="tab-content">
+            {activeTab === 'ticket-details' && (
+              <div className="ticket-details-content">
+                {/* Left Column */}
+                <div className="form-column-left">
+                  {/* Required Information Section */}
+                  <div className="form-section">
+                    <div className="section-header red-header">⚠ REQUIRED INFORMATION</div>
+
+                    <div className="form-group">
+                      <label>COMPLAINT NUMBER:</label>
+                      <div className="read-only-field">Auto-generated</div>
+                    </div>
+
+                    <div className="form-group">
+                      <label>URGENCY LEVEL:</label>
+                      <select name="urgencyLevel" value={formData.urgencyLevel} onChange={handleInputChange} className="form-select">
+                        <option>Select a Level</option>
+                        <option>Critical</option>
+                        <option>High</option>
+                        <option>Medium</option>
+                        <option>Low</option>
+                      </select>
+                    </div>
+
+                    <div className="form-group">
+                      <label>STATUS:</label>
+                      <select name="status" value={formData.status} onChange={handleInputChange} className="form-select">
+                        <option>Draft</option>
+                        <option>Submitted</option>
+                        <option>In Review</option>
+                        <option>Closed</option>
+                      </select>
+                    </div>
+
+                    <div className="form-group">
+                      <label>CREATED:</label>
+                      <div className="read-only-field">{formData.created}</div>
+                    </div>
+                  </div>
+
+                  {/* GIN / Part Number Section */}
+                  <div className="form-section">
+                    <div className="section-header red-header">⚠ GIN / PART NUMBER</div>
+
+                    <div className="form-group">
+                      <label>GIN / PART NUMBER:</label>
+                      <input
+                        type="text"
+                        name="ginPartNumber"
+                        value={formData.ginPartNumber}
+                        onChange={handleInputChange}
+                        className="form-input"
+                        placeholder="Enter GIN or Part Number"
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>DESCRIPTION:</label>
+                      <textarea
+                        name="description"
+                        value={formData.description}
+                        onChange={handleInputChange}
+                        className="form-textarea"
+                        placeholder="Enter description"
+                        rows="4"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Right Column */}
+                <div className="form-column-right">
+                  <div className="form-section">
+                    <div className="section-header gray-header">📋 REQUESTED INFORMATION</div>
+
+                    <div className="form-group">
+                      <label>Complaint Owner:</label>
+                      <div className="read-only-field">{formData.complaintOwner}</div>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Assigned To:</label>
+                      <input
+                        type="text"
+                        name="assignedTo"
+                        value={formData.assignedTo}
+                        onChange={handleInputChange}
+                        className="form-input"
+                        placeholder="Select assignee"
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>QA Coordinator:</label>
+                      <input
+                        type="text"
+                        name="qaCoordinator"
+                        value={formData.qaCoordinator}
+                        onChange={handleInputChange}
+                        className="form-input"
+                        placeholder="Select QA Coordinator"
+                      />
+                    </div>
+
+                    <div className="form-group">
+                      <label>Type of Issue:</label>
+                      <select name="typeOfIssue" value={formData.typeOfIssue} onChange={handleInputChange} className="form-select">
+                        <option>ESAB Product Quality Issue</option>
+                        <option>Non-Product Quality Issue</option>
+                        <option>Customer Suggestion</option>
+                      </select>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Request RMA:</label>
+                      <div className="radio-group">
+                        <label className="radio-label">
+                          <input
+                            type="radio"
+                            name="requestRMA"
+                            value="Yes"
+                            checked={formData.requestRMA === 'Yes'}
+                            onChange={handleInputChange}
+                          />
+                          Yes
+                        </label>
+                        <label className="radio-label">
+                          <input
+                            type="radio"
+                            name="requestRMA"
+                            value="No"
+                            checked={formData.requestRMA === 'No'}
+                            onChange={handleInputChange}
+                          />
+                          No
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Customer Requires CAB/BD:</label>
+                      <div className="radio-group">
+                        <label className="radio-label">
+                          <input
+                            type="radio"
+                            name="customerRequiresCabBd"
+                            value="Yes"
+                            checked={formData.customerRequiresCabBd === 'Yes'}
+                            onChange={handleInputChange}
+                          />
+                          Yes
+                        </label>
+                        <label className="radio-label">
+                          <input
+                            type="radio"
+                            name="customerRequiresCabBd"
+                            value="No"
+                            checked={formData.customerRequiresCabBd === 'No'}
+                            onChange={handleInputChange}
+                          />
+                          No
+                        </label>
+                      </div>
+                    </div>
+
+                    <div className="form-group">
+                      <label>Date of Sale:</label>
+                      <input
+                        type="date"
+                        name="dateOfSale"
+                        value={formData.dateOfSale}
+                        onChange={handleInputChange}
+                        className="form-input"
+                      />
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            )}
+
+            {/* Other tabs content */}
+            {activeTab !== 'ticket-details' && (
+              <div className="tab-placeholder">
+                <p>{tabs.find(t => t.id === activeTab)?.label} - Content coming soon</p>
+              </div>
+            )}
+          </div>
         </div>
 
-        {/* Step 1: Basic Info */}
-        {step === 1 && (
-          <div className="form-step">
-            <h3>Basic Information</h3>
-
-            <div className="form-group">
-              <label>Claim Type *</label>
-              <select
-                name="claimType"
-                value={formData.claimType}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select claim type...</option>
-                {claimTypes.map(type => (
-                  <option key={type} value={type}>{type}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>Product *</label>
-              <select
-                name="product"
-                value={formData.product}
-                onChange={handleChange}
-                required
-              >
-                <option value="">Select product...</option>
-                {products.map(prod => (
-                  <option key={prod} value={prod}>{prod}</option>
-                ))}
-              </select>
-            </div>
-
-            <div className="form-group">
-              <label>Site/Location *</label>
-              <input
-                type="text"
-                name="site"
-                value={formData.site}
-                onChange={handleChange}
-                placeholder="Enter site location"
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Priority</label>
-              <select name="priority" value={formData.priority} onChange={handleChange}>
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-                <option value="Critical">Critical</option>
-              </select>
-            </div>
-          </div>
-        )}
-
-        {/* Step 2: Details */}
-        {step === 2 && (
-          <div className="form-step">
-            <h3>Claim Details</h3>
-
-            <div className="form-group">
-              <label>Description *</label>
-              <textarea
-                name="description"
-                value={formData.description}
-                onChange={handleChange}
-                placeholder="Describe the issue in detail..."
-                rows="6"
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label>Reported By *</label>
-              <input
-                type="text"
-                name="reportedBy"
-                value={formData.reportedBy}
-                onChange={handleChange}
-                placeholder="Enter name or contact"
-                required
-              />
-            </div>
-
-            <div className="form-row">
-              <div className="form-group">
-                <label>Invoice Number</label>
-                <input
-                  type="text"
-                  name="invoice"
-                  value={formData.invoice}
-                  onChange={handleChange}
-                  placeholder="INV-XXXX"
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Shipment Number</label>
-                <input
-                  type="text"
-                  name="shipmentNum"
-                  value={formData.shipmentNum}
-                  onChange={handleChange}
-                  placeholder="SHIP-XXXX"
-                />
-              </div>
-            </div>
-          </div>
-        )}
-
-        {/* Step 3: Review */}
-        {step === 3 && (
-          <div className="form-step">
-            <h3>Review Your Claim</h3>
-
-            <div className="review-section">
-              <div className="review-row">
-                <span className="review-label">Claim Type:</span>
-                <span className="review-value">{formData.claimType || 'Not specified'}</span>
-              </div>
-              <div className="review-row">
-                <span className="review-label">Product:</span>
-                <span className="review-value">{formData.product || 'Not specified'}</span>
-              </div>
-              <div className="review-row">
-                <span className="review-label">Site:</span>
-                <span className="review-value">{formData.site || 'Not specified'}</span>
-              </div>
-              <div className="review-row">
-                <span className="review-label">Priority:</span>
-                <span className={`review-value priority-${formData.priority.toLowerCase()}`}>
-                  {formData.priority}
-                </span>
-              </div>
-              <div className="review-row full">
-                <span className="review-label">Description:</span>
-                <span className="review-value">{formData.description || 'Not specified'}</span>
-              </div>
-              <div className="review-row">
-                <span className="review-label">Reported By:</span>
-                <span className="review-value">{formData.reportedBy || 'Not specified'}</span>
-              </div>
-              <div className="review-row">
-                <span className="review-label">Invoice:</span>
-                <span className="review-value">{formData.invoice || 'N/A'}</span>
-              </div>
-              <div className="review-row">
-                <span className="review-label">Shipment:</span>
-                <span className="review-value">{formData.shipmentNum || 'N/A'}</span>
-              </div>
-            </div>
-
-            <div className="review-note">
-              <p>⚠️ Please review all information before submitting. You can edit it after creation.</p>
-            </div>
-          </div>
-        )}
-
-        {/* Form Actions */}
+        {/* Action Buttons */}
         <div className="form-actions">
-          <button
-            className="btn-secondary"
-            onClick={step > 1 ? handleBack : onBackToDashboard}
-          >
-            {step > 1 ? '← Back' : 'Cancel'}
-          </button>
-
-          {step < 3 && (
-            <button
-              className="btn-primary"
-              onClick={handleNext}
-              disabled={
-                (step === 1 && (!formData.claimType || !formData.product || !formData.site)) ||
-                (step === 2 && (!formData.description || !formData.reportedBy))
-              }
-            >
-              Next →
-            </button>
-          )}
-
-          {step === 3 && (
-            <button className="btn-primary btn-submit" onClick={handleSubmit}>
-              ✓ Create Claim
-            </button>
-          )}
+          <button className="btn-save">Save</button>
+          <button className="btn-cancel" onClick={onBackToDashboard}>Cancel</button>
         </div>
       </div>
     </div>

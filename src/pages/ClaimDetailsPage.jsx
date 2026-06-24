@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import Navigation from '../components/Navigation'
+import TopNavigation from '../components/TopNavigation'
 import { getClaimById } from '../data/mockData'
 import './ClaimDetailsPage.css'
 
-function ClaimDetailsPage({ user, claimId, onLogout, onBackToClaims, onBackToDashboard }) {
+function ClaimDetailsPage({ user, claimId, onLogout, onBackToClaims, onBackToDashboard, onNavigate, currentPage }) {
   const [claim, setClaim] = useState(null)
   const [activeTab, setActiveTab] = useState('details')
 
@@ -27,7 +27,7 @@ function ClaimDetailsPage({ user, claimId, onLogout, onBackToClaims, onBackToDas
 
   return (
     <div className="claim-details-page">
-      <Navigation user={user} onLogout={onLogout} />
+      <TopNavigation user={user} onLogout={onLogout} onNavigate={onNavigate} currentPage={currentPage} />
 
       <div className="details-container">
         <div className="details-header">

@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import Navigation from '../components/Navigation'
+import TopNavigation from '../components/TopNavigation'
 import { mockClaims, getClaimsByUser } from '../data/mockData'
 import './ClaimsPage.css'
 
-function ClaimsPage({ user, onLogout, onViewDetails, onBackToDashboard }) {
+function ClaimsPage({ user, onLogout, onViewDetails, onBackToDashboard, onNavigate, currentPage }) {
   const [claims, setClaims] = useState([])
   const [filteredClaims, setFilteredClaims] = useState([])
   const [statusFilter, setStatusFilter] = useState('All')
@@ -24,7 +24,7 @@ function ClaimsPage({ user, onLogout, onViewDetails, onBackToDashboard }) {
 
   return (
     <div className="claims-page">
-      <Navigation user={user} onLogout={onLogout} />
+      <TopNavigation user={user} onLogout={onLogout} onNavigate={onNavigate} currentPage={currentPage} />
 
       <div className="claims-container">
         <div className="claims-header">
