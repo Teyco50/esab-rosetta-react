@@ -1,0 +1,168 @@
+.claims-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.claims-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.claims-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 40px;
+  gap: 20px;
+}
+
+.back-btn {
+  background: white;
+  color: #6366f1;
+  border: 2px solid #6366f1;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  margin-bottom: 12px;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: #6366f1;
+  color: white;
+}
+
+.claims-header h2 {
+  font-size: 28px;
+  color: #1f2937;
+}
+
+.filter-section {
+  display: flex;
+  gap: 12px;
+}
+
+.filter-btn {
+  background: white;
+  border: 1px solid #e5e7eb;
+  color: #374151;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  border-color: #6366f1;
+  color: #6366f1;
+}
+
+.filter-btn.active {
+  background: #6366f1;
+  color: white;
+  border-color: #6366f1;
+}
+
+.claims-table-wrapper {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  margin-bottom: 20px;
+}
+
+.claims-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.claims-table thead {
+  background: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.claims-table th {
+  padding: 16px;
+  text-align: left;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+}
+
+.claims-table td {
+  padding: 16px;
+  border-bottom: 1px solid #e5e7eb;
+  color: #1f2937;
+  font-size: 14px;
+}
+
+.claims-table tbody tr {
+  transition: all 0.3s ease;
+}
+
+.claims-table tbody tr:hover {
+  background: #f9fafb;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.status-open {
+  background: #dbeafe;
+  color: #1e40af;
+}
+
+.status-closed {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.view-btn {
+  background: #6366f1;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-btn:hover {
+  background: #4f46e5;
+  transform: translateY(-2px);
+}
+
+.claims-footer {
+  text-align: center;
+  color: #6b7280;
+  font-size: 14px;
+  padding-top: 20px;
+}
+
+@media (max-width: 768px) {
+  .claims-header {
+    flex-direction: column;
+  }
+
+  .filter-section {
+    flex-wrap: wrap;
+  }
+
+  .claims-table {
+    font-size: 12px;
+  }
+
+  .claims-table th,
+  .claims-table td {
+    padding: 12px 8px;
+  }
+}
