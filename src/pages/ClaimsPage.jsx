@@ -30,7 +30,7 @@ function ClaimsPage({ user, onLogout, onViewDetails, onBackToDashboard }) {
         <div className="claims-header">
           <div>
             <button className="back-btn" onClick={onBackToDashboard}>← Back to Dashboard</button>
-            <h2>All Claims</h2>
+            <h2>All Claims 📋</h2>
           </div>
 
           <div className="filter-section">
