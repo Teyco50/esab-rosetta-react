@@ -7,10 +7,11 @@ import ClaimDetailsPage from './pages/ClaimDetailsPage'
 import NewClaimPage from './pages/NewClaimPage'
 import CatalogsProductsPage from './pages/CatalogsProductsPage'
 import PlaceholderPage from './pages/PlaceholderPage'
+import InterfaceModulePage from './pages/InterfaceModulePage'
 
 const PLACEHOLDER_PAGES = {
-  // Claims
-  'interface-module':    { title: 'Interface Module Management', section: 'Claims' },
+  // Claims — 'interface-module' handled by dedicated page
+  'interface-module':    null,
   'auto-close':          { title: 'Auto Close Ticket',           section: 'Claims' },
   'search-edit-claim':   { title: 'Search - Edit Claim',         section: 'Claims' },
   'delete-claim':        { title: 'Delete Claim',                section: 'Claims' },
@@ -124,7 +125,16 @@ function App() {
             />
           )}
 
-          {PLACEHOLDER_PAGES[currentPage] && (
+          {currentPage === 'interface-module' && (
+            <InterfaceModulePage
+              user={user}
+              onLogout={handleLogout}
+              onNavigate={handleNavigate}
+              currentPage={currentPage}
+            />
+          )}
+
+          {PLACEHOLDER_PAGES[currentPage] != null && (
             <PlaceholderPage
               user={user}
               onLogout={handleLogout}
