@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import TopNavigation from '../components/TopNavigation'
 import KPICard from '../components/KPICard'
 import { LineChart, BarChart, DoughnutChart } from '../components/ChartComponent'
+import ClaimsByRegionMap from '../components/ClaimsByRegionMap'
 import { getDashboardStats, getChartData } from '../data/mockData'
 import './DashboardPage.css'
 
@@ -109,6 +110,9 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
             </div>
           </div>
         </div>
+
+        {/* Regional Map */}
+        <ClaimsByRegionMap />
 
         {/* Action Button */}
         <div className="action-section">
