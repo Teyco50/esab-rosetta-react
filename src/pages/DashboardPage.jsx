@@ -75,7 +75,7 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
 
         {/* Claims by Status KPIs */}
         <div className="status-kpi-card">
-          <h3>Claims by Status</h3>
+          <h3>Claims by Status ✦</h3>
           <div className="status-kpi-grid">
             <div className="status-kpi-item" style={{ borderColor: '#6366f1' }}>
               <span className="status-kpi-icon">📋</span>
