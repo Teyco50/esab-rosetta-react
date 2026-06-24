@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import TopNavigation from '../components/TopNavigation'
 import KPICard from '../components/KPICard'
-import { LineChart, BarChart, DoughnutChart } from '../components/ChartComponent'
+import { BarChart } from '../components/ChartComponent'
 import ClaimsByRegionMap from '../components/ClaimsByRegionMap'
 import { getDashboardStats, getChartData } from '../data/mockData'
 import './DashboardPage.css'
@@ -26,8 +26,13 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
       <div className="dashboard-container">
         {/* Header */}
         <div className="dashboard-header">
-          <h2>Welcome, {user.split('@')[0]}</h2>
-          <p>Claims Management Dashboard</p>
+          <div>
+            <h2>Welcome, {user.split('@')[0]}</h2>
+            <p>Claims Management Dashboard</p>
+          </div>
+          <button className="view-claims-btn" onClick={onViewClaims}>
+            View All Claims →
+          </button>
         </div>
 
         {/* KPI Cards */}
@@ -66,60 +71,14 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
           />
         </div>
 
-        {/* Charts Row 1 */}
-        <div className="charts-row">
-          <div className="chart-card">
-            <h3>Claims Over Time</h3>
-            <LineChart data={chartData.lineChart} />
-          </div>
-          <div className="chart-card">
-            <h3>Claims by Status</h3>
-            <BarChart data={chartData.barChart} />
-          </div>
-        </div>
-
-        {/* Charts Row 2 */}
-        <div className="charts-row">
-          <div className="chart-card">
-            <h3>Distribution by Type</h3>
-            <DoughnutChart data={chartData.donutChart} />
-          </div>
-          <div className="chart-card">
-            <h3>Regional Distribution</h3>
-            <div className="region-list">
-              <div className="region-item">
-                <span>North America</span>
-                <span className="count">8</span>
-              </div>
-              <div className="region-item">
-                <span>Europe</span>
-                <span className="count">6</span>
-              </div>
-              <div className="region-item">
-                <span>Asia</span>
-                <span className="count">5</span>
-              </div>
-              <div className="region-item">
-                <span>South America</span>
-                <span className="count">4</span>
-              </div>
-              <div className="region-item">
-                <span>Other Regions</span>
-                <span className="count">5</span>
-              </div>
-            </div>
-          </div>
+        {/* Claims by Status chart */}
+        <div className="chart-card">
+          <h3>Claims by Status</h3>
+          <BarChart data={chartData.barChart} />
         </div>
 
         {/* Regional Map */}
         <ClaimsByRegionMap />
-
-        {/* Action Button */}
-        <div className="action-section">
-          <button className="view-claims-btn" onClick={onViewClaims}>
-            View All Claims →
-          </button>
-        </div>
       </div>
     </div>
   )
