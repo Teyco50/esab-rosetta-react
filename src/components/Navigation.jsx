@@ -11,7 +11,7 @@ function Navigation({ user, onLogout }) {
       <div className="nav-right">
         <span className="user-info">👤 {user}</span>
         <button className="logout-btn" onClick={onLogout}>
-          Cerrar Sesión
+          Sign Out
         </button>
       </div>
     </nav>

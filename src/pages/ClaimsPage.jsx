@@ -29,8 +29,8 @@ function ClaimsPage({ user, onLogout, onViewDetails, onBackToDashboard }) {
       <div className="claims-container">
         <div className="claims-header">
           <div>
-            <button className="back-btn" onClick={onBackToDashboard}>← Volver al Dashboard</button>
-            <h2>Todas las Reclamaciones</h2>
+            <button className="back-btn" onClick={onBackToDashboard}>← Back to Dashboard</button>
+            <h2>All Claims</h2>
           </div>
 
           <div className="filter-section">
@@ -38,19 +38,19 @@ function ClaimsPage({ user, onLogout, onViewDetails, onBackToDashboard }) {
               className={`filter-btn ${statusFilter === 'All' ? 'active' : ''}`}
               onClick={() => setStatusFilter('All')}
             >
-              Todas ({claims.length})
+              All ({claims.length})
             </button>
             <button
               className={`filter-btn ${statusFilter === 'Open' ? 'active' : ''}`}
               onClick={() => setStatusFilter('Open')}
             >
-              Abiertas
+              Open
             </button>
             <button
               className={`filter-btn ${statusFilter === 'Closed' ? 'active' : ''}`}
               onClick={() => setStatusFilter('Closed')}
             >
-              Cerradas
+              Closed
             </button>
           </div>
         </div>
@@ -60,13 +60,13 @@ function ClaimsPage({ user, onLogout, onViewDetails, onBackToDashboard }) {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Tipo</th>
+                <th>Type</th>
                 <th>Status</th>
-                <th>Sitio</th>
-                <th>Producto</th>
-                <th>Asignado a</th>
-                <th>Tiempo</th>
-                <th>Acción</th>
+                <th>Site</th>
+                <th>Product</th>
+                <th>Assigned To</th>
+                <th>Time Elapsed</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -88,7 +88,7 @@ function ClaimsPage({ user, onLogout, onViewDetails, onBackToDashboard }) {
                       className="view-btn"
                       onClick={() => onViewDetails(claim.id)}
                     >
-                      Ver →
+                      View →
                     </button>
                   </td>
                 </tr>
@@ -98,7 +98,7 @@ function ClaimsPage({ user, onLogout, onViewDetails, onBackToDashboard }) {
         </div>
 
         <div className="claims-footer">
-          <p>Total: {filteredClaims.length} reclamaciones</p>
+          <p>Total: {filteredClaims.length} claims</p>
         </div>
       </div>
     </div>
