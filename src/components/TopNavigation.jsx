@@ -66,8 +66,24 @@ function TopNavigation({ user, onLogout, onNavigate, currentPage }) {
           </div>
         </div>
 
-        <button className="nav-item">Project Identifier ▼</button>
-        <button className="nav-item">Reports ▼</button>
+        <div className="nav-dropdown">
+          <button className="nav-item">Project Identifier ▼</button>
+          <div className="dropdown-menu">
+            <button onClick={() => onNavigate('pi-products')}>Products</button>
+            <button onClick={() => onNavigate('pi-customers')}>Customers</button>
+          </div>
+        </div>
+
+        <div className="nav-dropdown">
+          <button className="nav-item">Reports ▼</button>
+          <div className="dropdown-menu dropdown-menu-wide">
+            <button onClick={() => onNavigate('report-quick-query')}>Quick Query</button>
+            <button onClick={() => onNavigate('report-powerbi')}>PowerBi QuickQuery Dashboard</button>
+            <button onClick={() => onNavigate('report-cs')}>CS Report</button>
+            <button onClick={() => onNavigate('report-catalog-export')}>Catalog Export</button>
+          </div>
+        </div>
+
         <button className="nav-item">Support ▼</button>
       </div>
 
