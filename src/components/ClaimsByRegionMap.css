@@ -38,7 +38,7 @@
 
 .region-map-body {
   display: grid;
-  grid-template-columns: 380px 1fr;
+  grid-template-columns: 300px 1fr;
   gap: 24px;
   align-items: center;
 }
@@ -123,7 +123,7 @@
 
 /* Map */
 .region-map-wrap {
-  height: 280px;
+  height: 360px;
   border-radius: 8px;
   overflow: hidden;
   background: #f8fafc;

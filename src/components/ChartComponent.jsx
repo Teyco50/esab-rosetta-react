@@ -29,7 +29,17 @@ export const LineChart = ({ data }) => (
 )
 
 export const BarChart = ({ data }) => (
-  <Bar data={data} options={{ responsive: true, indexAxis: undefined }} />
+  <Bar
+    data={data}
+    options={{
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: undefined,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true } }
+    }}
+    style={{ height: '160px' }}
+  />
 )
 
 export const DoughnutChart = ({ data }) => (

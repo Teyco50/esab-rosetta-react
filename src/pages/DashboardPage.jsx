@@ -77,7 +77,9 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
         {/* Claims by Status chart */}
         <div className="chart-card" style={{ marginTop: '20px' }}>
           <h3>Claims by Status</h3>
-          <BarChart data={chartData.barChart} />
+          <div style={{ height: '160px', position: 'relative' }}>
+            <BarChart data={chartData.barChart} />
+          </div>
         </div>
       </div>
     </div>
