@@ -216,6 +216,15 @@
   color: #9ca3af;
 }
 
+.im-iface-schedule {
+  font-size: 12px;
+  color: #6b7280;
+  background: #f3f4f6;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
 /* Interface name */
 .im-iface-name {
   font-size: 17px;
@@ -224,59 +233,68 @@
   letter-spacing: 0.2px;
 }
 
-/* Metrics row */
+/* Metrics — vertical rows */
 .im-iface-metrics {
   display: flex;
+  flex-direction: column;
   gap: 0;
   border: 1px solid #f1f5f9;
   border-radius: 10px;
   overflow: hidden;
 }
-.im-metric {
-  flex: 1;
-  padding: 12px 10px;
-  text-align: center;
-  border-right: 1px solid #f1f5f9;
-}
-.im-metric:last-child { border-right: none; }
 
-.im-metric-val {
-  font-size: 18px;
-  font-weight: 700;
-  color: #1a1a2e;
-  line-height: 1.1;
-}
-.im-metric-lbl {
-  font-size: 10px;
-  color: #9ca3af;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.4px;
-  margin-top: 4px;
-}
-
-/* Progress bar */
-.im-progress-wrap {
+.im-metric-row {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px;
+  border-bottom: 1px solid #f1f5f9;
 }
-.im-progress-label {
+.im-metric-row:last-child { border-bottom: none; }
+
+.im-metric-icon {
+  font-size: 16px;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+}
+
+.im-metric-content {
+  flex: 1;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.im-metric-lbl {
   font-size: 12px;
   color: #6b7280;
-  font-weight: 600;
+  font-weight: 500;
 }
-.im-progress-track {
-  height: 7px;
+
+.im-metric-val {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a2e;
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Inline bar for effectiveness row */
+.im-inline-bar-wrap {
+  width: 80px;
+  flex-shrink: 0;
+}
+.im-inline-bar-track {
+  height: 6px;
   background: #f1f5f9;
-  border-radius: 4px;
+  border-radius: 3px;
   overflow: hidden;
 }
-.im-progress-bar {
+.im-inline-bar-fill {
   height: 100%;
-  border-radius: 4px;
+  border-radius: 3px;
   transition: width 0.5s ease;
 }
 

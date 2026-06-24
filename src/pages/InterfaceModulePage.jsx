@@ -17,10 +17,10 @@ const STATUS_META = {
 }
 
 const INITIAL_INTERFACES = [
-  { id: 1, name: 'Import Claims Interface', source: 'SAP NA', status: 'Healthy', lastRun: '09:42', records: 1240, errors: 0,  latency: 1.2, uptime: 99.8, runCount: 18 },
-  { id: 2, name: 'Import Claims Interface', source: 'LATAM',  status: 'Failed',  lastRun: '06:30', records: 0,    errors: 89, latency: 0,   uptime: 87.2, runCount: 5  },
-  { id: 3, name: 'Import Claims Interface', source: 'INSOFT', status: 'Healthy', lastRun: '09:05', records: 678,  errors: 0,  latency: 1.4, uptime: 99.1, runCount: 14 },
-  { id: 4, name: 'Import Claims Interface', source: 'CRM',    status: 'Warning', lastRun: '08:33', records: 540,  errors: 14, latency: 4.8, uptime: 94.5, runCount: 11 },
+  { id: 1, name: 'Import Claims Interface', source: 'SAP NA', status: 'Healthy', lastRun: '2026-06-24 09:42', imported: 1240, errored: 0,  nextRun: '2026-06-24 10:42', schedule: 'Every 1 hr'  },
+  { id: 2, name: 'Import Claims Interface', source: 'LATAM',  status: 'Failed',  lastRun: '2026-06-24 06:30', imported: 0,    errored: 89, nextRun: 'Manual only',      schedule: 'Every 2 hrs' },
+  { id: 3, name: 'Import Claims Interface', source: 'INSOFT', status: 'Healthy', lastRun: '2026-06-24 09:05', imported: 678,  errored: 0,  nextRun: '2026-06-24 11:05', schedule: 'Every 2 hrs' },
+  { id: 4, name: 'Import Claims Interface', source: 'CRM',    status: 'Warning', lastRun: '2026-06-24 08:33', imported: 540,  errored: 14, nextRun: '2026-06-24 09:33', schedule: 'Every 1 hr'  },
 ]
 
 const INITIAL_LOGS = [
@@ -56,8 +56,8 @@ export default function InterfaceModulePage({ user, onLogout, onNavigate, curren
     const healthy  = all.filter(i => i.status === 'Healthy').length
     const failed   = all.filter(i => i.status === 'Failed').length
     const warning  = all.filter(i => i.status === 'Warning').length
-    const totalRec = all.reduce((s, i) => s + i.records, 0)
-    const totalErr = all.reduce((s, i) => s + i.errors, 0)
+    const totalRec = all.reduce((s, i) => s + i.imported, 0)
+    const totalErr = all.reduce((s, i) => s + i.errored, 0)
     const rate     = totalRec + totalErr > 0
       ? ((totalRec / (totalRec + totalErr)) * 100).toFixed(1)
       : '100.0'
@@ -68,18 +68,20 @@ export default function InterfaceModulePage({ user, onLogout, onNavigate, curren
 
   const handleRetry = (iface) => {
     setRetrying(iface.id)
-    const ts = new Date().toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12: false })
+    const now = new Date()
+    const ts  = now.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12: false })
+    const nextHour = new Date(now.getTime() + 60 * 60 * 1000)
+    const nextTs  = `2026-06-24 ${nextHour.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12: false })}`
     setTimeout(() => {
-      const newRecords = Math.floor(Math.random() * 600) + 200
+      const newImported = Math.floor(Math.random() * 600) + 200
       setInterfaces(prev => prev.map(i =>
         i.id === iface.id
-          ? { ...i, status: 'Healthy', errors: 0, records: newRecords,
-              latency: +(Math.random() * 2 + 0.8).toFixed(1), lastRun: ts,
-              runCount: i.runCount + 1, uptime: +(Math.min(i.uptime + 5, 99.9)).toFixed(1) }
+          ? { ...i, status: 'Healthy', errored: 0, imported: newImported,
+              lastRun: `2026-06-24 ${ts}`, nextRun: nextTs }
           : i
       ))
       setLogs(prev => [
-        { time: ts, source: iface.source, event: `Manual retry — ${newRecords.toLocaleString()} records imported`, type: 'success' },
+        { time: ts, source: iface.source, event: `Manual retry — ${newImported.toLocaleString()} lines imported successfully`, type: 'success' },
         ...prev,
       ])
       setRetrying(null)
@@ -89,7 +91,7 @@ export default function InterfaceModulePage({ user, onLogout, onNavigate, curren
   const handleSkip = (iface) => {
     const ts = new Date().toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit', hour12: false })
     setInterfaces(prev => prev.map(i =>
-      i.id === iface.id ? { ...i, status: 'Idle' } : i
+      i.id === iface.id ? { ...i, status: 'Idle', nextRun: 'Manual only' } : i
     ))
     setLogs(prev => [
       { time: ts, source: iface.source, event: 'Interface skipped by operator', type: 'warning' },
@@ -201,8 +203,11 @@ export default function InterfaceModulePage({ user, onLogout, onNavigate, curren
               : 100
             const isIssue = iface.status === 'Failed' || iface.status === 'Warning'
 
+            const effectColor = successPct < 90 ? '#dc2626' : successPct < 98 ? '#d97706' : '#16a34a'
+
             return (
               <div key={iface.id} className={`im-iface-card ${iface.status.toLowerCase()}`}>
+
                 {/* Card header */}
                 <div className="im-iface-header">
                   <div className="im-iface-source-wrap">
@@ -213,94 +218,96 @@ export default function InterfaceModulePage({ user, onLogout, onNavigate, curren
                       {sm.icon} {iface.status}
                     </span>
                   </div>
-                  <span className="im-iface-lastrun">Last run: {iface.lastRun}</span>
+                  <span className="im-iface-schedule">🕐 {iface.schedule}</span>
                 </div>
 
                 {/* Interface name */}
                 <div className="im-iface-name">{iface.name}</div>
 
-                {/* Metrics row */}
+                {/* 5 key metrics */}
                 <div className="im-iface-metrics">
-                  <div className="im-metric">
-                    <div className="im-metric-val">{iface.records.toLocaleString()}</div>
-                    <div className="im-metric-lbl">Records Today</div>
-                  </div>
-                  <div className="im-metric">
-                    <div className="im-metric-val" style={{ color: iface.errors > 0 ? '#dc2626' : '#16a34a' }}>
-                      {iface.errors}
+
+                  <div className="im-metric-row">
+                    <span className="im-metric-icon">🕐</span>
+                    <div className="im-metric-content">
+                      <div className="im-metric-lbl">Last Run</div>
+                      <div className="im-metric-val">{iface.lastRun}</div>
                     </div>
-                    <div className="im-metric-lbl">Errors</div>
                   </div>
-                  <div className="im-metric">
-                    <div className="im-metric-val" style={{ color: iface.latency > 3 ? '#d97706' : '#1a1a2e' }}>
-                      {iface.latency > 0 ? `${iface.latency}s` : '—'}
+
+                  <div className="im-metric-row">
+                    <span className="im-metric-icon">✅</span>
+                    <div className="im-metric-content">
+                      <div className="im-metric-lbl">Lines Imported Successfully</div>
+                      <div className="im-metric-val" style={{ color: '#16a34a' }}>
+                        {iface.imported.toLocaleString()}
+                      </div>
                     </div>
-                    <div className="im-metric-lbl">Latency</div>
                   </div>
-                  <div className="im-metric">
-                    <div className="im-metric-val">{iface.runCount}</div>
-                    <div className="im-metric-lbl">Runs Today</div>
-                  </div>
-                  <div className="im-metric">
-                    <div className="im-metric-val" style={{ color: iface.uptime < 95 ? '#d97706' : '#16a34a' }}>
-                      {iface.uptime}%
+
+                  <div className="im-metric-row">
+                    <span className="im-metric-icon">❌</span>
+                    <div className="im-metric-content">
+                      <div className="im-metric-lbl">Lines with Error (need reload)</div>
+                      <div className="im-metric-val" style={{ color: iface.errored > 0 ? '#dc2626' : '#16a34a' }}>
+                        {iface.errored > 0 ? iface.errored.toLocaleString() : '0 — No errors'}
+                      </div>
                     </div>
-                    <div className="im-metric-lbl">Uptime</div>
                   </div>
+
+                  <div className="im-metric-row">
+                    <span className="im-metric-icon">⏭</span>
+                    <div className="im-metric-content">
+                      <div className="im-metric-lbl">Next Scheduled Run</div>
+                      <div className="im-metric-val" style={{ color: iface.nextRun === 'Manual only' ? '#d97706' : '#1a1a2e' }}>
+                        {iface.nextRun}
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="im-metric-row">
+                    <span className="im-metric-icon">📊</span>
+                    <div className="im-metric-content">
+                      <div className="im-metric-lbl">Effectiveness</div>
+                      <div className="im-metric-val" style={{ color: effectColor }}>{successPct}%</div>
+                    </div>
+                    <div className="im-inline-bar-wrap">
+                      <div className="im-inline-bar-track">
+                        <div className="im-inline-bar-fill" style={{ width: `${successPct}%`, background: effectColor }} />
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
 
-                {/* Success rate bar */}
-                <div className="im-progress-wrap">
-                  <div className="im-progress-label">
-                    <span>Success rate</span>
-                    <span style={{ color: successPct < 90 ? '#dc2626' : successPct < 98 ? '#d97706' : '#16a34a' }}>
-                      {successPct}%
-                    </span>
-                  </div>
-                  <div className="im-progress-track">
-                    <div className="im-progress-bar"
-                      style={{
-                        width: `${successPct}%`,
-                        background: successPct < 90 ? '#dc2626' : successPct < 98 ? '#d97706' : '#16a34a'
-                      }}
-                    />
-                  </div>
-                </div>
-
-                {/* Remediation actions — only for issues */}
+                {/* Remediation / status footer */}
                 {isIssue && (
                   <div className="im-iface-actions">
                     {iface.status === 'Failed' && (
                       <div className="im-error-msg">
-                        {iface.source === 'LATAM' ? '⚡ Connection timeout — host unreachable' : '⚡ Validation errors detected'}
+                        ⚡ {iface.source === 'LATAM' ? 'Connection timeout — host unreachable' : 'Validation errors detected'}
                       </div>
                     )}
                     {iface.status === 'Warning' && (
                       <div className="im-warn-msg">
-                        ⚠️ {iface.errors} records failed field validation
+                        ⚠️ {iface.errored} lines failed field validation and need to be reloaded
                       </div>
                     )}
                     <div className="im-action-btns">
-                      <button
-                        className="im-btn-retry"
-                        onClick={() => handleRetry(iface)}
-                        disabled={retrying === iface.id}
-                      >
+                      <button className="im-btn-retry" onClick={() => handleRetry(iface)} disabled={retrying === iface.id}>
                         {retrying === iface.id ? '↻ Retrying…' : '↻ Retry Now'}
                       </button>
-                      <button className="im-btn-skip" onClick={() => handleSkip(iface)}>
-                        ⏸ Skip
-                      </button>
+                      <button className="im-btn-skip" onClick={() => handleSkip(iface)}>⏸ Skip</button>
                     </div>
                   </div>
                 )}
-
                 {iface.status === 'Healthy' && (
                   <div className="im-healthy-msg">✅ Running normally — no action required</div>
                 )}
                 {iface.status === 'Idle' && (
                   <div className="im-idle-msg">⏸ Skipped by operator</div>
                 )}
+
               </div>
             )
           })}
