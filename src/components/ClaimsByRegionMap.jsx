@@ -146,7 +146,7 @@ export default function ClaimsByRegionMap() {
           <ComposableMap
             projectionConfig={{ scale: 185, center: [10, 10] }}
             style={{ width: '100%', height: '100%' }}
-            viewBox="0 0 800 450"
+            viewBox="0 50 800 400"
           >
             <Geographies geography={GEO_URL}>
               {({ geographies }) =>
