@@ -1,13 +1,23 @@
 .dashboard {
-  min-height: 100vh;
+  height: 100vh;
   background: #f0f2f5;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .dashboard-container {
+  flex: 1;
   max-width: 1400px;
+  width: 100%;
   margin: 0 auto;
-  padding: 24px 24px 40px;
-  padding-top: 90px;
+  padding: 16px 20px 16px;
+  padding-top: 86px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+  overflow-y: auto;
 }
 
 /* Header */
@@ -15,65 +25,61 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  flex-shrink: 0;
 }
 
 .dashboard-header h2 {
-  font-size: 22px;
+  font-size: 20px;
   color: #1a1a2e;
-  margin-bottom: 2px;
+  margin-bottom: 1px;
   font-weight: 700;
 }
 
 .dashboard-header p {
-  font-size: 13px;
+  font-size: 12px;
   color: #6b7280;
 }
 
-/* KPI Grid - compact horizontal cards */
+/* KPI Grid */
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 20px;
+  gap: 12px;
+  flex-shrink: 0;
 }
 
-/* Chart card */
-.chart-card {
-  background: white;
-  border-radius: 12px;
-  padding: 20px 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-  margin-bottom: 0;
+/* Bottom section: map + status side by side */
+.dashboard-bottom {
+  display: grid;
+  grid-template-columns: 3fr 2fr;
+  gap: 14px;
+  flex: 1;
+  min-height: 0;
 }
 
-.chart-card h3 {
-  font-size: 14px;
-  color: #1f2937;
-  margin-bottom: 16px;
-  font-weight: 600;
-}
-
-/* Claims by Status KPI boxes */
+/* Status KPI card */
 .status-kpi-card {
   background: white;
   border-radius: 12px;
-  padding: 20px 24px;
+  padding: 18px 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
-  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .status-kpi-card h3 {
   font-size: 14px;
   color: #1f2937;
-  margin-bottom: 16px;
+  margin-bottom: 14px;
   font-weight: 600;
+  flex-shrink: 0;
 }
 
 .status-kpi-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  flex: 1;
 }
 
 .status-kpi-item {
@@ -82,7 +88,7 @@
   align-items: center;
   justify-content: center;
   gap: 6px;
-  padding: 20px 12px;
+  padding: 16px 8px;
   border-radius: 10px;
   border-top: 4px solid;
   background: #f8fafc;
@@ -91,35 +97,35 @@
 }
 
 .status-kpi-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .status-kpi-icon {
-  font-size: 22px;
+  font-size: 20px;
 }
 
 .status-kpi-value {
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
   color: #1a1a2e;
   line-height: 1;
 }
 
 .status-kpi-label {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   color: #6b7280;
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
-/* View All Claims button (moved to header) */
+/* View All Claims button */
 .view-claims-btn {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
   color: #ffd700;
   border: 1px solid rgba(255, 215, 0, 0.3);
-  padding: 10px 20px;
+  padding: 9px 18px;
   border-radius: 8px;
   font-size: 13px;
   font-weight: 600;
@@ -136,30 +142,57 @@
   box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
 }
 
-@media (max-width: 1024px) {
-  .kpi-grid {
-    grid-template-columns: repeat(2, 1fr);
+/* ── Responsive ── */
+
+/* Tablet */
+@media (max-width: 1100px) {
+  .dashboard-bottom {
+    grid-template-columns: 1fr;
+  }
+
+  .status-kpi-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .dashboard {
+    height: auto;
+    overflow: visible;
+  }
+
+  .dashboard-container {
+    overflow-y: visible;
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+  .kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .status-kpi-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .dashboard-container {
-    padding: 16px 12px;
-    padding-top: 80px;
+    padding: 12px 12px;
+    padding-top: 82px;
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .dashboard-header h2 {
+    font-size: 17px;
   }
 
   .kpi-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-  }
-
-  .dashboard-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .dashboard-header h2 {
-    font-size: 18px;
+    gap: 8px;
   }
 }

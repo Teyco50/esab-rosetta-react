@@ -2,45 +2,51 @@
   background: white;
   border-radius: 12px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
-  padding: 24px;
-  margin-top: 24px;
+  padding: 18px 20px;
+  margin-top: 0;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .region-map-header {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  margin-bottom: 20px;
+  margin-bottom: 14px;
+  flex-shrink: 0;
 }
 
 .region-map-header h3 {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: 700;
   color: #1a1a2e;
-  margin: 0 0 4px 0;
+  margin: 0 0 2px 0;
 }
 
 .region-map-header p {
-  font-size: 12px;
+  font-size: 11px;
   color: #94a3b8;
   margin: 0;
 }
 
 .region-map-badge {
-  font-size: 12px;
+  font-size: 11px;
   color: #64748b;
   background: #f1f5f9;
-  padding: 4px 10px;
+  padding: 3px 9px;
   border-radius: 20px;
   border: 1px solid #e2e8f0;
+  white-space: nowrap;
 }
 
 .region-map-body {
   display: grid;
   grid-template-columns: 40% 60%;
   gap: 0;
-  align-items: stretch;
+  flex: 1;
+  min-height: 0;
 }
 
 /* Table */
@@ -48,22 +54,22 @@
   display: flex;
   flex-direction: column;
   gap: 0;
-  padding: 8px 16px;
-  justify-content: center;
-  height: 420px;
+  padding: 4px 12px 4px 0;
+  justify-content: space-evenly;
   border-right: 1px solid #f1f5f9;
+  overflow: hidden;
 }
 
 .region-row {
   display: grid;
-  grid-template-columns: 1fr 56px 1fr 44px;
+  grid-template-columns: 1fr 48px 1fr 36px;
   align-items: center;
-  gap: 10px;
-  padding: 12px 8px;
+  gap: 8px;
+  padding: 8px 6px;
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.2s, transform 0.15s;
-  border-bottom: 1px solid #f1f5f9;
+  border-bottom: 1px solid #f8fafc;
 }
 
 .region-row:last-child {
@@ -73,20 +79,20 @@
 .region-row:hover,
 .region-row.highlighted {
   background: #fffbeb;
-  transform: translateX(4px);
+  transform: translateX(3px);
 }
 
 .region-name {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 13px;
+  gap: 6px;
+  font-size: 12px;
   font-weight: 500;
   color: #1e293b;
 }
 
 .region-icon {
-  font-size: 16px;
+  font-size: 14px;
 }
 
 .region-claims {
@@ -94,19 +100,19 @@
 }
 
 .region-claims strong {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   color: #1a1a2e;
   display: block;
 }
 
 .region-sub {
-  font-size: 10px;
+  font-size: 9px;
   color: #94a3b8;
 }
 
 .region-bar-wrap {
-  height: 6px;
+  height: 5px;
   background: #f1f5f9;
   border-radius: 3px;
   overflow: hidden;
@@ -119,7 +125,7 @@
 }
 
 .region-rate {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   color: #64748b;
   text-align: right;
@@ -127,7 +133,8 @@
 
 /* Map */
 .region-map-wrap {
-  height: 420px;
+  flex: 1;
+  min-height: 0;
   border-radius: 0 8px 8px 0;
   overflow: hidden;
   background: #f8fafc;
@@ -137,20 +144,20 @@
 .map-tooltip {
   background: #1a1a2e;
   color: white;
-  padding: 12px 16px;
+  padding: 10px 14px;
   border-radius: 8px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   z-index: 9999;
   pointer-events: none;
-  min-width: 180px;
+  min-width: 170px;
   border: 1px solid rgba(255, 215, 0, 0.3);
 }
 
 .tooltip-region {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 700;
-  margin-bottom: 8px;
-  padding-bottom: 8px;
+  margin-bottom: 7px;
+  padding-bottom: 7px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   color: #ffd700;
 }
@@ -159,9 +166,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 12px;
-  margin-bottom: 4px;
-  gap: 16px;
+  font-size: 11px;
+  margin-bottom: 3px;
+  gap: 14px;
 }
 
 .tooltip-row span {
@@ -172,25 +179,40 @@
   color: white;
 }
 
-.tooltip-row strong.open {
-  color: #fbbf24;
-}
+.tooltip-row strong.open   { color: #fbbf24; }
+.tooltip-row strong.closed { color: #34d399; }
 
-.tooltip-row strong.closed {
-  color: #34d399;
-}
+/* Responsive */
+@media (max-width: 1100px) {
+  .region-map-card {
+    height: auto;
+  }
 
-@media (max-width: 1024px) {
   .region-map-body {
     grid-template-columns: 1fr;
+    gap: 12px;
   }
 
   .region-map-wrap {
-    height: 220px;
+    height: 240px;
+    border-radius: 8px;
+  }
+
+  .region-table {
+    border-right: none;
+    border-bottom: 1px solid #f1f5f9;
+    padding: 0 0 12px 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .region-map-wrap {
+    height: 200px;
   }
 
   .region-row {
-    grid-template-columns: 1fr 64px 80px 40px;
-    gap: 8px;
+    grid-template-columns: 1fr 40px 1fr 32px;
+    gap: 6px;
+    padding: 6px 4px;
   }
 }
