@@ -15,7 +15,7 @@ function DashboardPage({ user, onLogout, onViewClaims }) {
   }, [user])
 
   if (!stats || !chartData) {
-    return <div>Cargando...</div>
+    return <div>Loading...</div>
   }
 
   return (
@@ -25,27 +25,27 @@ function DashboardPage({ user, onLogout, onViewClaims }) {
       <div className="dashboard-container">
         {/* Header */}
         <div className="dashboard-header">
-          <h2>Bienvenido, {user.split('@')[0]}</h2>
-          <p>Dashboard de Reclamaciones</p>
+          <h2>Welcome, {user.split('@')[0]}</h2>
+          <p>Claims Management Dashboard</p>
         </div>
 
         {/* KPI Cards */}
         <div className="kpi-grid">
           <KPICard
-            title="Claims Abiertos"
+            title="Open Claims"
             value={stats.openClaims}
             icon="📋"
             gradient={['#6366f1', '#818cf8']}
             trend={{ positive: true, percent: 12 }}
-            comparison="vs período anterior"
+            comparison="vs last period"
           />
           <KPICard
-            title="Claims Cerrados"
+            title="Closed Claims"
             value={stats.closedClaims}
             icon="✅"
             gradient={['#10b981', '#34d399']}
             trend={{ positive: true, percent: 50 }}
-            comparison="vs período anterior"
+            comparison="vs last period"
           />
           <KPICard
             title="YTD Claims"
@@ -53,15 +53,15 @@ function DashboardPage({ user, onLogout, onViewClaims }) {
             icon="📊"
             gradient={['#f59e0b', '#fbbf24']}
             trend={{ positive: false, percent: 8 }}
-            comparison="vs año anterior"
+            comparison="vs last year"
           />
           <KPICard
-            title="Regiones"
+            title="Active Regions"
             value={stats.regionCount}
             icon="🌍"
             gradient={['#8b5cf6', '#a78bfa']}
             trend={{ positive: true, percent: 25 }}
-            comparison="activas"
+            comparison="worldwide"
           />
         </div>
 
@@ -113,7 +113,7 @@ function DashboardPage({ user, onLogout, onViewClaims }) {
         {/* Action Button */}
         <div className="action-section">
           <button className="view-claims-btn" onClick={onViewClaims}>
-            Ver Todas las Reclamaciones →
+            View All Claims →
           </button>
         </div>
       </div>

@@ -22,7 +22,7 @@ function LoginPage({ onLogin }) {
 
       <div className="login-right">
         <div className="login-card">
-          <h2>Iniciar Sesión</h2>
+          <h2>Sign In</h2>
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="username">📧 Email</label>
@@ -36,7 +36,7 @@ function LoginPage({ onLogin }) {
             </div>
 
             <div className="form-group">
-              <label htmlFor="password">🔐 Contraseña</label>
+              <label htmlFor="password">🔐 Password</label>
               <input
                 type="password"
                 id="password"
@@ -47,7 +47,7 @@ function LoginPage({ onLogin }) {
             </div>
 
             <button type="submit" className="login-btn">
-              Ingresar
+              Sign In
             </button>
           </form>
 
