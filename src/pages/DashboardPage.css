@@ -54,6 +54,66 @@
   font-weight: 600;
 }
 
+/* Claims by Status KPI boxes */
+.status-kpi-card {
+  background: white;
+  border-radius: 12px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+  margin-top: 20px;
+}
+
+.status-kpi-card h3 {
+  font-size: 14px;
+  color: #1f2937;
+  margin-bottom: 16px;
+  font-weight: 600;
+}
+
+.status-kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.status-kpi-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 20px 12px;
+  border-radius: 10px;
+  border-top: 4px solid;
+  background: #f8fafc;
+  transition: transform 0.2s, box-shadow 0.2s;
+  cursor: default;
+}
+
+.status-kpi-item:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.1);
+}
+
+.status-kpi-icon {
+  font-size: 22px;
+}
+
+.status-kpi-value {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1a1a2e;
+  line-height: 1;
+}
+
+.status-kpi-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
 /* View All Claims button (moved to header) */
 .view-claims-btn {
   background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);

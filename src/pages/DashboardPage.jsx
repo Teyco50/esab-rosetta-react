@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import TopNavigation from '../components/TopNavigation'
 import KPICard from '../components/KPICard'
-import { BarChart } from '../components/ChartComponent'
 import ClaimsByRegionMap from '../components/ClaimsByRegionMap'
 import { getDashboardStats, getChartData } from '../data/mockData'
 import './DashboardPage.css'
@@ -74,11 +73,30 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
         {/* Regional Map */}
         <ClaimsByRegionMap />
 
-        {/* Claims by Status chart */}
-        <div className="chart-card" style={{ marginTop: '20px' }}>
+        {/* Claims by Status KPIs */}
+        <div className="status-kpi-card">
           <h3>Claims by Status</h3>
-          <div style={{ height: '160px', position: 'relative' }}>
-            <BarChart data={chartData.barChart} />
+          <div className="status-kpi-grid">
+            <div className="status-kpi-item" style={{ borderColor: '#6366f1' }}>
+              <span className="status-kpi-icon">📋</span>
+              <span className="status-kpi-value">3</span>
+              <span className="status-kpi-label">Open</span>
+            </div>
+            <div className="status-kpi-item" style={{ borderColor: '#10b981' }}>
+              <span className="status-kpi-icon">✅</span>
+              <span className="status-kpi-value">2</span>
+              <span className="status-kpi-label">Closed</span>
+            </div>
+            <div className="status-kpi-item" style={{ borderColor: '#f59e0b' }}>
+              <span className="status-kpi-icon">⏳</span>
+              <span className="status-kpi-value">2</span>
+              <span className="status-kpi-label">Pending</span>
+            </div>
+            <div className="status-kpi-item" style={{ borderColor: '#8b5cf6' }}>
+              <span className="status-kpi-icon">⏸️</span>
+              <span className="status-kpi-value">1</span>
+              <span className="status-kpi-label">On Hold</span>
+            </div>
           </div>
         </div>
       </div>
