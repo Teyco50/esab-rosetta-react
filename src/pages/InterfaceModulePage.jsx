@@ -270,24 +270,6 @@ export default function InterfaceModulePage({ user, onLogout, onNavigate, curren
               </div>
             </div>
 
-            {/* Filter bar */}
-            <div className="im-filter-bar">
-              <div className="im-filter-group">
-                <label>Date:</label>
-                <input type="text" value={date} onChange={e => setDate(e.target.value)} className="im-input" />
-              </div>
-              <div className="im-filter-group">
-                <label>Source:</label>
-                <select value={sourceFilter} onChange={e => setSourceFilter(e.target.value)} className="im-input">
-                  {['All', 'SAP NA', 'LATAM', 'INSOFT', 'CRM'].map(s => <option key={s}>{s}</option>)}
-                </select>
-              </div>
-              <button className="im-search-btn" onClick={handleSearch}>Search</button>
-              {applied !== 'All' && (
-                <button className="im-clear-btn" onClick={() => { setSourceFilter('All'); setApplied('All') }}>✕ Clear</button>
-              )}
-            </div>
-
             {/* Interface Cards */}
             <div className="im-cards-grid">
               {displayed.map(iface => {
