@@ -44,6 +44,11 @@ function TopNavigation({ user, onLogout, onNavigate, currentPage }) {
           <div className="dropdown-menu">
             <button onClick={() => onNavigate('claims')}>All Claims</button>
             <button onClick={() => onNavigate('new-claim')}>New Claim</button>
+            <button onClick={() => onNavigate('interface-module')}>Interface Module Management</button>
+            <button onClick={() => onNavigate('auto-close')}>Auto Close Ticket</button>
+            <button onClick={() => onNavigate('search-edit-claim')}>Search - Edit Claim</button>
+            <button onClick={() => onNavigate('delete-claim')}>Delete Claim</button>
+            <button onClick={() => onNavigate('change-claim-owner')}>Change Claim Owner</button>
           </div>
         </div>
 
