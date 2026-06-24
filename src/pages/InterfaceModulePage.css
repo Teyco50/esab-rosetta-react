@@ -39,6 +39,49 @@
   flex-shrink: 0;
 }
 
+/* ── Tabs ── */
+.im-tabs {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #e5e7eb;
+  padding-bottom: 0;
+}
+
+.im-tab {
+  background: none;
+  border: none;
+  padding: 10px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-radius: 6px 6px 0 0;
+}
+.im-tab:hover { color: #1a1a2e; background: #f9fafb; }
+.im-tab.active {
+  color: #1a1a2e;
+  border-bottom-color: #1a1a2e;
+  background: white;
+}
+
+.im-tab-badge {
+  background: #dc2626;
+  color: white;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+  min-width: 20px;
+  text-align: center;
+}
+
 /* Summary bar */
 .im-summary-bar {
   background: white;
@@ -443,6 +486,166 @@
 }
 .im-log-error   .im-log-event { color: #dc2626; }
 .im-log-warning .im-log-event { color: #92400e; }
+
+/* ── Errored clickable link on cards ── */
+.im-errored-link {
+  background: none;
+  border: none;
+  color: #dc2626;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0;
+  transition: color 0.2s;
+}
+.im-errored-link:hover { color: #991b1b; }
+
+/* ── Reload Claims tab ── */
+.im-reload-summary {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-left: auto;
+}
+.im-rs-pending {
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+.im-rs-done {
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+/* Error reason legend */
+.im-reason-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+.im-reason-chip {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 12px;
+  border-radius: 20px;
+}
+
+/* Reload card */
+.im-reload-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.im-reload-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px 12px;
+  border-bottom: 1px solid #f1f5f9;
+}
+.im-reload-card-header h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+}
+.im-pending-badge {
+  background: #fee2e2;
+  color: #dc2626;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 20px;
+}
+.im-reloaded-badge {
+  background: #dcfce7;
+  color: #16a34a;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 12px;
+  border-radius: 20px;
+}
+
+.im-no-pending {
+  padding: 32px 20px;
+  text-align: center;
+  font-size: 14px;
+  color: #16a34a;
+  font-weight: 600;
+}
+
+.im-reload-table-wrap { overflow-x: auto; }
+
+.im-reload-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.im-reload-table thead tr { background: #1f2937; }
+.im-reload-table thead th {
+  color: white;
+  padding: 11px 16px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.im-reload-table tbody tr {
+  border-bottom: 1px solid #f1f5f9;
+  transition: background 0.15s;
+}
+.im-reload-table tbody tr:hover { background: #f8fafc; }
+.im-reload-table tbody td { padding: 11px 16px; font-size: 13px; color: #374151; }
+
+.im-claim-id   { font-weight: 700; color: #1a1a2e; font-family: monospace; }
+.im-claim-desc { color: #374151; }
+.im-claim-date { color: #9ca3af; font-size: 12px; white-space: nowrap; }
+.im-claim-old-reason { font-size: 12px; color: #9ca3af; }
+
+.im-source-chip {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+.im-reason-chip-sm {
+  font-size: 11px;
+  font-weight: 500;
+  padding: 3px 9px;
+  border-radius: 4px;
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.im-btn-reload {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.im-btn-reload:hover:not(:disabled) { background: #1d4ed8; }
+.im-btn-reload:disabled { background: #9ca3af; cursor: not-allowed; }
+
+.im-reloaded-section { border-top: 3px solid #16a34a; }
+.im-reloaded-row td  { color: #6b7280; }
+.im-reloaded-row .im-claim-id { color: #16a34a; }
 
 @media (max-width: 1024px) {
   .im-cards-grid { grid-template-columns: 1fr; }
