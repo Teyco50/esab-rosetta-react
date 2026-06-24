@@ -144,8 +144,9 @@ export default function ClaimsByRegionMap() {
         {/* Right: Map */}
         <div className="region-map-wrap" onMouseMove={handleMouseMove}>
           <ComposableMap
-            projectionConfig={{ scale: 140, center: [10, 10] }}
+            projectionConfig={{ scale: 185, center: [10, 10] }}
             style={{ width: '100%', height: '100%' }}
+            viewBox="0 0 800 450"
           >
             <Geographies geography={GEO_URL}>
               {({ geographies }) =>

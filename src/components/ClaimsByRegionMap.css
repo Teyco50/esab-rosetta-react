@@ -38,25 +38,29 @@
 
 .region-map-body {
   display: grid;
-  grid-template-columns: 300px 1fr;
-  gap: 24px;
-  align-items: center;
+  grid-template-columns: 40% 60%;
+  gap: 0;
+  align-items: stretch;
 }
 
 /* Table */
 .region-table {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
+  padding: 8px 16px;
+  justify-content: center;
+  height: 420px;
+  border-right: 1px solid #f1f5f9;
 }
 
 .region-row {
   display: grid;
-  grid-template-columns: 1fr 64px 120px 48px;
+  grid-template-columns: 1fr 56px 1fr 44px;
   align-items: center;
-  gap: 12px;
-  padding: 10px 12px;
-  border-radius: 8px;
+  gap: 10px;
+  padding: 12px 8px;
+  border-radius: 6px;
   cursor: pointer;
   transition: background 0.2s, transform 0.15s;
   border-bottom: 1px solid #f1f5f9;
@@ -123,8 +127,8 @@
 
 /* Map */
 .region-map-wrap {
-  height: 360px;
-  border-radius: 8px;
+  height: 420px;
+  border-radius: 0 8px 8px 0;
   overflow: hidden;
   background: #f8fafc;
 }
