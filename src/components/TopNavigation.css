@@ -99,6 +99,16 @@
   display: flex;
 }
 
+.dropdown-menu-wide {
+  min-width: 220px;
+}
+
+.dropdown-menu button.active-item {
+  background: #fef9c3;
+  color: #1a1a2e;
+  font-weight: 600;
+}
+
 .dropdown-menu button {
   background: none;
   border: none;

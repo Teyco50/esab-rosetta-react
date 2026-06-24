@@ -5,6 +5,7 @@ import DashboardPage from './pages/DashboardPage'
 import ClaimsPage from './pages/ClaimsPage'
 import ClaimDetailsPage from './pages/ClaimDetailsPage'
 import NewClaimPage from './pages/NewClaimPage'
+import CatalogsProductsPage from './pages/CatalogsProductsPage'
 
 function App() {
   const [user, setUser] = useState(null)
@@ -80,6 +81,15 @@ function App() {
               user={user}
               onLogout={handleLogout}
               onBackToDashboard={() => handleNavigate('dashboard')}
+              onNavigate={handleNavigate}
+              currentPage={currentPage}
+            />
+          )}
+
+          {currentPage === 'cat-products' && (
+            <CatalogsProductsPage
+              user={user}
+              onLogout={handleLogout}
               onNavigate={handleNavigate}
               currentPage={currentPage}
             />
