@@ -71,14 +71,14 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
           />
         </div>
 
+        {/* Regional Map */}
+        <ClaimsByRegionMap />
+
         {/* Claims by Status chart */}
-        <div className="chart-card">
+        <div className="chart-card" style={{ marginTop: '20px' }}>
           <h3>Claims by Status</h3>
           <BarChart data={chartData.barChart} />
         </div>
-
-        {/* Regional Map */}
-        <ClaimsByRegionMap />
       </div>
     </div>
   )
