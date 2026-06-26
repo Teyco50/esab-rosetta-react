@@ -5,6 +5,7 @@ import ClaimsByRegionMap from '../components/ClaimsByRegionMap'
 import { getDashboardStats, getChartData, getGlobalStats, mockClaims } from '../data/mockData'
 
 const top10Oldest = [...mockClaims]
+  .filter(c => c.status !== 'Closed')
   .sort((a, b) => parseInt(b.timeElapsed) - parseInt(a.timeElapsed))
   .slice(0, 5)
 import './DashboardPage.css'
