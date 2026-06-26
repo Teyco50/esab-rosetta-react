@@ -27,8 +27,8 @@ const LAST_NAMES = [
   'Al-Mazrouei', 'Dupont', 'Martin', 'Müller', 'Schmidt', 'Rossi', 'Ferrari', 'Nakamura', 'Park', 'Singh', 'Hassan',
 ]
 
-// Distribution per cycle of 10: Open×3, Closed×4, Pending×2, On Hold×1
-const STATUS_CYCLE = ['Open', 'Open', 'Open', 'Closed', 'Closed', 'Closed', 'Closed', 'Pending', 'Pending', 'On Hold']
+// Distribution per cycle of 12: Open×3, Closed×3, Pending×2, On Hold×1, Analysis×2, Corrective Action×1
+const STATUS_CYCLE = ['Open', 'Open', 'Open', 'Closed', 'Closed', 'Closed', 'Pending', 'Pending', 'On Hold', 'Analysis', 'Analysis', 'Corrective Action']
 
 const p = (arr, i) => arr[Math.abs(i) % arr.length]
 const fullName = (i) => `${p(FIRST_NAMES, i)} ${p(LAST_NAMES, i + 7)}`
@@ -72,10 +72,12 @@ export const getDashboardStats = (username) => {
 }
 
 export const getGlobalStats = () => ({
-  open:    mockClaims.filter(c => c.status === 'Open').length,
-  closed:  mockClaims.filter(c => c.status === 'Closed').length,
-  pending: mockClaims.filter(c => c.status === 'Pending').length,
-  onHold:  mockClaims.filter(c => c.status === 'On Hold').length,
+  open:              mockClaims.filter(c => c.status === 'Open').length,
+  closed:            mockClaims.filter(c => c.status === 'Closed').length,
+  pending:           mockClaims.filter(c => c.status === 'Pending').length,
+  onHold:            mockClaims.filter(c => c.status === 'On Hold').length,
+  analysis:          mockClaims.filter(c => c.status === 'Analysis').length,
+  correctiveAction:  mockClaims.filter(c => c.status === 'Corrective Action').length,
 })
 
 export const getChartData = (username) => {

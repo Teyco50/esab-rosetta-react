@@ -2,7 +2,11 @@ import { useState, useEffect } from 'react'
 import TopNavigation from '../components/TopNavigation'
 import KPICard from '../components/KPICard'
 import ClaimsByRegionMap from '../components/ClaimsByRegionMap'
-import { getDashboardStats, getChartData, getGlobalStats } from '../data/mockData'
+import { getDashboardStats, getChartData, getGlobalStats, mockClaims } from '../data/mockData'
+
+const top10Oldest = [...mockClaims]
+  .sort((a, b) => parseInt(b.timeElapsed) - parseInt(a.timeElapsed))
+  .slice(0, 10)
 import './DashboardPage.css'
 
 function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }) {
@@ -74,8 +78,34 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
           />
         </div>
 
-        {/* Regional Map */}
-        <ClaimsByRegionMap />
+        {/* Regional Map + Top 10 Oldest */}
+        <div className="region-with-top10">
+          <ClaimsByRegionMap />
+
+          <div className="top10-panel">
+            <div className="top10-header">
+              <h3>🕐 Top 10 Oldest</h3>
+              <span className="top10-sub">Open claims by age</span>
+            </div>
+            <div className="top10-list">
+              {top10Oldest.map((c, idx) => (
+                <div key={c.id} className="top10-row">
+                  <span className="top10-rank">#{idx + 1}</span>
+                  <div className="top10-info">
+                    <span className="top10-id">{c.id}</span>
+                    <span className="top10-site">{c.site}</span>
+                  </div>
+                  <div className="top10-right">
+                    <span className="top10-days">{c.timeElapsed}</span>
+                    <span className={`top10-status top10-${c.status.toLowerCase().replace(' ', '-')}`}>
+                      {c.status}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
 
         {/* Claims by Status — Global */}
         <div className="status-kpi-card">
@@ -100,6 +130,16 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
               <span className="status-kpi-icon">⏸️</span>
               <span className="status-kpi-value">{globalStats.onHold}</span>
               <span className="status-kpi-label">On Hold</span>
+            </div>
+            <div className="status-kpi-item" style={{ borderColor: '#0891b2' }}>
+              <span className="status-kpi-icon">🔍</span>
+              <span className="status-kpi-value">{globalStats.analysis}</span>
+              <span className="status-kpi-label">Analysis</span>
+            </div>
+            <div className="status-kpi-item" style={{ borderColor: '#16a34a' }}>
+              <span className="status-kpi-icon">🔧</span>
+              <span className="status-kpi-value">{globalStats.correctiveAction}</span>
+              <span className="status-kpi-label">Corrective Action</span>
             </div>
           </div>
         </div>
