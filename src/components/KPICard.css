@@ -83,3 +83,12 @@
   opacity: 0.75;
   white-space: nowrap;
 }
+
+@media (max-width: 640px) {
+  .kpi-card      { padding: 11px 12px; gap: 8px; }
+  .kpi-header    { width: 34px; height: 34px; }
+  .kpi-icon      { font-size: 17px; }
+  .kpi-value     { font-size: 20px; }
+  .kpi-label     { font-size: 10px; }
+  .kpi-footer    { display: none; }
+}
