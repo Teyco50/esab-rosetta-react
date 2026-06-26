@@ -8,15 +8,14 @@ import NewClaimPage from './pages/NewClaimPage'
 import CatalogsProductsPage from './pages/CatalogsProductsPage'
 import PlaceholderPage from './pages/PlaceholderPage'
 import InterfaceModulePage from './pages/InterfaceModulePage'
+import { getUserByEmail } from './data/mockData'
 
 const PLACEHOLDER_PAGES = {
-  // Claims — 'interface-module' handled by dedicated page
   'interface-module':    null,
   'auto-close':          { title: 'Auto Close Ticket',           section: 'Claims' },
   'search-edit-claim':   { title: 'Search - Edit Claim',         section: 'Claims' },
   'delete-claim':        { title: 'Delete Claim',                section: 'Claims' },
   'change-claim-owner':  { title: 'Change Claim Owner',          section: 'Claims' },
-  // Catalogs
   'cat-contacts':        { title: 'Customer Contacts',           section: 'Catalogs' },
   'cat-mfgs':            { title: 'MFGS Sites',                  section: 'Catalogs' },
   'cat-distributors':    { title: 'Distributors',                section: 'Catalogs' },
@@ -27,24 +26,23 @@ const PLACEHOLDER_PAGES = {
   'cat-regions':         { title: 'Regions',                     section: 'Catalogs' },
   'cat-activate':        { title: 'Activate Users',              section: 'Catalogs' },
   'cat-issue-detail':    { title: 'Issue - Issue Detail',        section: 'Catalogs' },
-  // Project Identifier
   'pi-products':         { title: 'Products',                    section: 'Project Identifier' },
   'pi-customers':        { title: 'Customers',                   section: 'Project Identifier' },
-  // Reports
-  'report-quick-query':     { title: 'Quick Query',                    section: 'Reports' },
-  'report-powerbi':         { title: 'PowerBi QuickQuery Dashboard',   section: 'Reports' },
-  'report-cs':              { title: 'CS Report',                      section: 'Reports' },
-  'report-catalog-export':  { title: 'Catalog Export',                 section: 'Reports' },
+  'report-quick-query':     { title: 'Quick Query',                  section: 'Reports' },
+  'report-powerbi':         { title: 'PowerBi QuickQuery Dashboard', section: 'Reports' },
+  'report-cs':              { title: 'CS Report',                    section: 'Reports' },
+  'report-catalog-export':  { title: 'Catalog Export',               section: 'Reports' },
 }
 
 function App() {
+  // user is now { email, name, role } — resolved from MOCK_USERS on login
   const [user, setUser] = useState(null)
   const [currentPage, setCurrentPage] = useState('login')
   const [selectedClaimId, setSelectedClaimId] = useState(null)
   const [claimsFilter, setClaimsFilter] = useState('All')
 
-  const handleLogin = (username) => {
-    setUser(username)
+  const handleLogin = (email) => {
+    setUser(getUserByEmail(email))
     setCurrentPage('dashboard')
   }
 

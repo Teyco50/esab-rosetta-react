@@ -1,15 +1,20 @@
 import { useState } from 'react'
 import './LoginPage.css'
 
+const DEMO_USERS = [
+  { email: 'admin@esab.com',          role: 'Admin',          hint: 'All 100 claims' },
+  { email: 'qa@esab.com',             role: 'QA Coordinator', hint: '~33 claims as QA' },
+  { email: 'agent@esab.com',          role: 'Claims Agent',   hint: '~25 assigned claims' },
+  { email: 'support@esabrosetta.com', role: 'Claims Agent',   hint: '~25 assigned claims' },
+]
+
 function LoginPage({ onLogin }) {
   const [username, setUsername] = useState('support@esabrosetta.com')
   const [password, setPassword] = useState('demo')
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (username && password) {
-      onLogin(username)
-    }
+    if (username && password) onLogin(username)
   }
 
   return (
@@ -31,7 +36,7 @@ function LoginPage({ onLogin }) {
                 id="username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                placeholder="support@esabrosetta.com"
+                placeholder="email@esab.com"
               />
             </div>
 
@@ -51,9 +56,25 @@ function LoginPage({ onLogin }) {
             </button>
           </form>
 
-          <p className="demo-info">
-            📌 Demo: support@esabrosetta.com / demo
-          </p>
+          <div className="demo-info">
+            <p className="demo-title">📌 Demo accounts (any password):</p>
+            <div className="demo-users">
+              {DEMO_USERS.map(u => (
+                <button
+                  key={u.email}
+                  className="demo-user-chip"
+                  type="button"
+                  onClick={() => setUsername(u.email)}
+                >
+                  <span className={`demo-role-badge role-${u.role.toLowerCase().replace(' ', '-')}`}>
+                    {u.role}
+                  </span>
+                  <span className="demo-email">{u.email}</span>
+                  <span className="demo-hint">{u.hint}</span>
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

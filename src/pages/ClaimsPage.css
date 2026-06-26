@@ -35,25 +35,45 @@
   color: white;
 }
 
+.claims-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
 .claims-header h2 {
   font-size: 28px;
   color: #1f2937;
+  margin: 0;
+}
+
+.claims-count-badge {
+  background: #f3f4f6;
+  color: #374151;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
 }
 
 .filter-section {
   display: flex;
-  gap: 12px;
+  gap: 8px;
+  flex-wrap: wrap;
 }
 
 .filter-btn {
   background: white;
   border: 1px solid #e5e7eb;
   color: #374151;
-  padding: 8px 16px;
+  padding: 7px 12px;
   border-radius: 6px;
-  font-size: 13px;
+  font-size: 12px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
 .filter-btn:hover {
@@ -65,6 +85,18 @@
   background: #6366f1;
   color: white;
   border-color: #6366f1;
+}
+
+.filter-count {
+  background: rgba(0,0,0,0.12);
+  border-radius: 8px;
+  padding: 1px 6px;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.filter-btn.active .filter-count {
+  background: rgba(255,255,255,0.25);
 }
 
 .claims-table-wrapper {
@@ -116,14 +148,24 @@
   font-weight: 600;
 }
 
-.status-open {
-  background: #dbeafe;
-  color: #1e40af;
+.status-open              { background: #dbeafe; color: #1e40af; }
+.status-closed            { background: #dcfce7; color: #15803d; }
+.status-pending           { background: #fef3c7; color: #92400e; }
+.status-on-hold           { background: #ede9fe; color: #5b21b6; }
+.status-analysis          { background: #e0f2fe; color: #0369a1; }
+.status-corrective-action { background: #d1fae5; color: #065f46; }
+
+.time-elapsed {
+  color: #dc2626;
+  font-weight: 600;
+  font-size: 12px;
 }
 
-.status-closed {
-  background: #dcfce7;
-  color: #15803d;
+.no-claims {
+  text-align: center;
+  padding: 40px;
+  color: #9ca3af;
+  font-size: 14px;
 }
 
 .view-btn {

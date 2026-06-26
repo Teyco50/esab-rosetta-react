@@ -111,7 +111,7 @@ function TopNavigation({ user, onLogout, onNavigate, currentPage }) {
 
         {/* User + logout */}
         <div className="nav-right">
-          <span className="user-info">Welcome, {user}</span>
+          <span className="user-info">Welcome, {user.name}</span>
           <button className="logout-btn" onClick={onLogout}>LogOut</button>
         </div>
       </nav>
@@ -135,7 +135,12 @@ function TopNavigation({ user, onLogout, onNavigate, currentPage }) {
           <button className="drawer-close" onClick={() => setDrawerOpen(false)}>✕</button>
         </div>
 
-        <div className="drawer-user">👤 {user}</div>
+        <div className="drawer-user">
+          <span>👤 {user.name}</span>
+          <span className={`drawer-role-badge role-${user.role.toLowerCase().replace(/\s+/g, '-')}`}>
+            {user.role}
+          </span>
+        </div>
 
         <nav className="drawer-nav">
           <button className="drawer-nav-item" onClick={() => navigate('dashboard')}>

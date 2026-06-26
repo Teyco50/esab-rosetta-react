@@ -18,16 +18,39 @@
   margin-bottom: 24px;
 }
 
+.dash-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 2px;
+}
+
 .dashboard-header h2 {
   font-size: 22px;
   color: #1a1a2e;
-  margin-bottom: 2px;
+  margin: 0;
   font-weight: 700;
+}
+
+.dash-role-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 12px;
+  letter-spacing: 0.3px;
+  flex-shrink: 0;
 }
 
 .dashboard-header p {
   font-size: 13px;
   color: #6b7280;
+}
+
+.status-kpi-total {
+  font-size: 12px;
+  font-weight: 400;
+  color: #9ca3af;
 }
 
 /* KPI Grid - compact horizontal cards */
@@ -94,6 +117,13 @@
 }
 
 .top10-list { flex: 1; overflow-y: auto; }
+
+.top10-empty {
+  padding: 24px;
+  text-align: center;
+  font-size: 13px;
+  color: #9ca3af;
+}
 
 .top10-row {
   display: flex;

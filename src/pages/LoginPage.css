@@ -114,12 +114,74 @@
 }
 
 .demo-info {
-  text-align: center;
-  color: #6b7280;
-  font-size: 12px;
   margin-top: 20px;
-  padding-top: 20px;
+  padding-top: 16px;
   border-top: 1px solid #e5e7eb;
+}
+
+.demo-title {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9ca3af;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: 0 0 10px 0;
+}
+
+.demo-users {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.demo-user-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.15s;
+  width: 100%;
+}
+
+.demo-user-chip:hover {
+  border-color: #667eea;
+  background: #f0f4ff;
+}
+
+.demo-role-badge {
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.role-admin             { background: #fee2e2; color: #b91c1c; }
+.role-qa-coordinator    { background: #dbeafe; color: #1d4ed8; }
+.role-claims-agent      { background: #dcfce7; color: #15803d; }
+.role-viewer            { background: #f3f4f6; color: #374151; }
+
+.demo-email {
+  font-size: 11px;
+  color: #374151;
+  font-family: monospace;
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.demo-hint {
+  font-size: 10px;
+  color: #9ca3af;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 @media (max-width: 768px) {

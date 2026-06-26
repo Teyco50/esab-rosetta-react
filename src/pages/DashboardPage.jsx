@@ -1,27 +1,47 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import TopNavigation from '../components/TopNavigation'
 import KPICard from '../components/KPICard'
 import ClaimsByRegionMap from '../components/ClaimsByRegionMap'
-import { getDashboardStats, getChartData, getGlobalStats, mockClaims } from '../data/mockData'
-
-const top10Oldest = [...mockClaims]
-  .filter(c => c.status !== 'Closed')
-  .sort((a, b) => parseInt(b.timeElapsed) - parseInt(a.timeElapsed))
-  .slice(0, 5)
+import { getDashboardStats, getGlobalStats, getClaimsByUser } from '../data/mockData'
 import './DashboardPage.css'
 
+const ROLE_SUBTITLE = {
+  'Admin':          'All Claims — Admin View',
+  'QA Coordinator': 'Claims Under QA Review — assigned to me',
+  'Viewer':         'Claims I Reported',
+  'Claims Agent':   'My Claims — assigned to me',
+}
+
+const ROLE_COLORS = {
+  'Admin':          { bg: '#fee2e2', color: '#b91c1c' },
+  'QA Coordinator': { bg: '#dbeafe', color: '#1d4ed8' },
+  'Claims Agent':   { bg: '#dcfce7', color: '#15803d' },
+  'Viewer':         { bg: '#f3f4f6', color: '#374151' },
+}
+
 function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }) {
-  const [stats, setStats] = useState(null)
+  const [stats, setStats]           = useState(null)
   const [globalStats, setGlobalStats] = useState(null)
+  const [userClaims, setUserClaims]   = useState([])
 
   useEffect(() => {
+    const uc = getClaimsByUser(user)
+    setUserClaims(uc)
     setStats(getDashboardStats(user))
     setGlobalStats(getGlobalStats())
   }, [user])
 
-  if (!stats || !globalStats) {
-    return <div>Loading...</div>
-  }
+  const top5Oldest = useMemo(() =>
+    [...userClaims]
+      .filter(c => c.status !== 'Closed')
+      .sort((a, b) => parseInt(b.timeElapsed) - parseInt(a.timeElapsed))
+      .slice(0, 5),
+    [userClaims]
+  )
+
+  if (!stats || !globalStats) return <div>Loading...</div>
+
+  const roleStyle = ROLE_COLORS[user.role] || ROLE_COLORS['Claims Agent']
 
   return (
     <div className="dashboard">
@@ -31,15 +51,23 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
         {/* Header */}
         <div className="dashboard-header">
           <div>
-            <h2>Welcome, {user.split('@')[0]}</h2>
-            <p>My Claims — assigned to me</p>
+            <div className="dash-name-row">
+              <h2>Welcome, {user.name}</h2>
+              <span
+                className="dash-role-badge"
+                style={{ background: roleStyle.bg, color: roleStyle.color }}
+              >
+                {user.role}
+              </span>
+            </div>
+            <p>{ROLE_SUBTITLE[user.role] || ROLE_SUBTITLE['Claims Agent']}</p>
           </div>
           <button className="view-claims-btn" onClick={onViewClaims}>
             View All Claims →
           </button>
         </div>
 
-        {/* KPI Cards */}
+        {/* KPI Cards — user's claims */}
         <div className="kpi-grid">
           <KPICard
             title="Open Claims"
@@ -79,17 +107,19 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
           />
         </div>
 
-        {/* Regional Map + Top 10 Oldest */}
+        {/* Regional Map + Top 5 Oldest (from user's claims) */}
         <div className="region-with-top10">
           <ClaimsByRegionMap />
 
           <div className="top10-panel">
             <div className="top10-header">
               <h3>🕐 Top 5 Oldest</h3>
-              <span className="top10-sub">Open claims by age</span>
+              <span className="top10-sub">Non-closed · my claims</span>
             </div>
             <div className="top10-list">
-              {top10Oldest.map((c, idx) => (
+              {top5Oldest.length === 0 ? (
+                <div className="top10-empty">No open claims</div>
+              ) : top5Oldest.map((c, idx) => (
                 <div key={c.id} className="top10-row">
                   <span className="top10-rank">#{idx + 1}</span>
                   <div className="top10-info">
@@ -98,7 +128,7 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
                   </div>
                   <div className="top10-right">
                     <span className="top10-days">{c.timeElapsed}</span>
-                    <span className={`top10-status top10-${c.status.toLowerCase().replace(' ', '-')}`}>
+                    <span className={`top10-status top10-${c.status.toLowerCase().replace(/\s+/g, '-')}`}>
                       {c.status}
                     </span>
                   </div>
@@ -108,9 +138,9 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
           </div>
         </div>
 
-        {/* Claims by Status — Global */}
+        {/* Global Claims by Status */}
         <div className="status-kpi-card">
-          <h3>Global Claims by Status ✦</h3>
+          <h3>Global Claims by Status ✦ <span className="status-kpi-total">({globalStats.open + globalStats.closed + globalStats.pending + globalStats.onHold + globalStats.analysis + globalStats.correctiveAction} total)</span></h3>
           <div className="status-kpi-grid">
             <div className="status-kpi-item" style={{ borderColor: '#6366f1' }}>
               <span className="status-kpi-icon">📋</span>
