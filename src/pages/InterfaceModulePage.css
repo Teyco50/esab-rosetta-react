@@ -648,13 +648,25 @@
 .im-reloaded-row .im-claim-id { color: #16a34a; }
 
 @media (max-width: 1024px) {
-  .im-cards-grid { grid-template-columns: 1fr; }
-  .im-summary-bar { gap: 12px; }
-  .im-summary-sep { display: none; }
+  .im-container    { padding-top: 80px; }
+  .im-cards-grid   { grid-template-columns: 1fr; }
+  .im-summary-bar  { gap: 12px; }
+  .im-summary-sep  { display: none; }
   .im-summary-item { min-width: 100px; flex: 0 0 calc(25% - 12px); }
 }
 
-@media (max-width: 640px) {
-  .im-header { flex-direction: column; gap: 8px; }
+@media (max-width: 768px) {
+  .im-header       { flex-direction: column; gap: 8px; align-items: flex-start; }
+  .im-tabs         { overflow-x: auto; }
+  .im-tab          { padding: 10px 14px; font-size: 13px; white-space: nowrap; }
   .im-summary-item { flex: 0 0 calc(50% - 8px); }
+  .im-reload-card-header { flex-wrap: wrap; gap: 8px; }
+}
+
+@media (max-width: 640px) {
+  .im-container    { padding: 12px 12px 32px; padding-top: 76px; }
+  .im-summary-item { flex: 0 0 calc(50% - 8px); }
+  .im-summary-val  { font-size: 20px; }
+  .im-reason-legend { gap: 6px; }
+  .im-reason-chip  { font-size: 11px; padding: 4px 10px; }
 }

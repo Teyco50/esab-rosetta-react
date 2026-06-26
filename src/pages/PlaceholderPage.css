@@ -67,3 +67,9 @@
   border-color: transparent;
   transform: translateY(-1px);
 }
+
+@media (max-width: 640px) {
+  .placeholder-card { padding: 36px 24px; margin: 0 12px; }
+  .placeholder-title { font-size: 20px; }
+  .placeholder-icon  { font-size: 40px; }
+}
