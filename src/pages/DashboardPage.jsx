@@ -6,7 +6,7 @@ import { getDashboardStats, getChartData, getGlobalStats, mockClaims } from '../
 
 const top10Oldest = [...mockClaims]
   .sort((a, b) => parseInt(b.timeElapsed) - parseInt(a.timeElapsed))
-  .slice(0, 10)
+  .slice(0, 5)
 import './DashboardPage.css'
 
 function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }) {
@@ -84,7 +84,7 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
 
           <div className="top10-panel">
             <div className="top10-header">
-              <h3>🕐 Top 10 Oldest</h3>
+              <h3>🕐 Top 5 Oldest</h3>
               <span className="top10-sub">Open claims by age</span>
             </div>
             <div className="top10-list">
