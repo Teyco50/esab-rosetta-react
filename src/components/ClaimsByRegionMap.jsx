@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ComposableMap, Geographies, Geography } from 'react-simple-maps'
+import { mockClaims } from '../data/mockData'
 import './ClaimsByRegionMap.css'
 
 const GEO_URL = 'https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json'
@@ -44,14 +45,6 @@ const COUNTRY_TO_REGION = {
   '792': 'Asia', '196': 'Asia',
 }
 
-const REGION_DATA = [
-  { region: 'North America', icon: '🌎', claims: 8, open: 4, closed: 4, rate: '50%', color: '#0ea5e9' },
-  { region: 'Europe',        icon: '🌍', claims: 6, open: 3, closed: 3, rate: '50%', color: '#6366f1' },
-  { region: 'Asia',          icon: '🌏', claims: 5, open: 3, closed: 2, rate: '40%', color: '#10b981' },
-  { region: 'South America', icon: '🌎', claims: 4, open: 2, closed: 2, rate: '50%', color: '#f59e0b' },
-  { region: 'Other Regions', icon: '🌐', claims: 5, open: 2, closed: 3, rate: '60%', color: '#8b5cf6' },
-]
-
 const REGION_COLORS = {
   'North America': '#0ea5e9',
   'Europe':        '#6366f1',
@@ -59,6 +52,35 @@ const REGION_COLORS = {
   'South America': '#f59e0b',
   'Other Regions': '#8b5cf6',
 }
+
+const REGION_ICONS = {
+  'North America': '🌎',
+  'Europe':        '🌍',
+  'Asia':          '🌏',
+  'South America': '🌎',
+  'Other Regions': '🌐',
+}
+
+// Derived from actual mock data — always in sync with the 100 claims
+const REGION_DATA = ['North America', 'Europe', 'Asia', 'South America', 'Other Regions'].map(region => {
+  const rc      = mockClaims.filter(c => c.region === region)
+  const total   = rc.length
+  const open    = rc.filter(c => c.status === 'Open').length
+  const closed  = rc.filter(c => c.status === 'Closed').length
+  const pending = rc.filter(c => c.status === 'Pending').length
+  return {
+    region,
+    icon:    REGION_ICONS[region],
+    color:   REGION_COLORS[region],
+    claims:  total,
+    open,
+    closed,
+    pending,
+    rate: total > 0 ? `${Math.round((closed / total) * 100)}%` : '0%',
+  }
+})
+
+const MAX_CLAIMS = Math.max(...REGION_DATA.map(r => r.claims))
 
 export default function ClaimsByRegionMap() {
   const [hoveredRegion, setHoveredRegion] = useState(null)
@@ -131,7 +153,7 @@ export default function ClaimsByRegionMap() {
                 <div
                   className="region-bar"
                   style={{
-                    width: `${(row.claims / 8) * 100}%`,
+                    width: `${(row.claims / MAX_CLAIMS) * 100}%`,
                     background: row.color
                   }}
                 />
@@ -182,6 +204,7 @@ export default function ClaimsByRegionMap() {
           <div className="tooltip-row"><span>Total Claims</span><strong>{tooltip.data.claims}</strong></div>
           <div className="tooltip-row"><span>Open</span><strong className="open">{tooltip.data.open}</strong></div>
           <div className="tooltip-row"><span>Closed</span><strong className="closed">{tooltip.data.closed}</strong></div>
+          <div className="tooltip-row"><span>Pending</span><strong>{tooltip.data.pending}</strong></div>
           <div className="tooltip-row"><span>Resolution</span><strong>{tooltip.data.rate}</strong></div>
         </div>
       )}
