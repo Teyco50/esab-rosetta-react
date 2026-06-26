@@ -2,19 +2,19 @@ import { useState, useEffect } from 'react'
 import TopNavigation from '../components/TopNavigation'
 import KPICard from '../components/KPICard'
 import ClaimsByRegionMap from '../components/ClaimsByRegionMap'
-import { getDashboardStats, getChartData } from '../data/mockData'
+import { getDashboardStats, getChartData, getGlobalStats } from '../data/mockData'
 import './DashboardPage.css'
 
 function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }) {
   const [stats, setStats] = useState(null)
-  const [chartData, setChartData] = useState(null)
+  const [globalStats, setGlobalStats] = useState(null)
 
   useEffect(() => {
     setStats(getDashboardStats(user))
-    setChartData(getChartData(user))
+    setGlobalStats(getGlobalStats())
   }, [user])
 
-  if (!stats || !chartData) {
+  if (!stats || !globalStats) {
     return <div>Loading...</div>
   }
 
@@ -27,7 +27,7 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
         <div className="dashboard-header">
           <div>
             <h2>Welcome, {user.split('@')[0]}</h2>
-            <p>Claims Management Dashboard</p>
+            <p>My Claims — assigned to me</p>
           </div>
           <button className="view-claims-btn" onClick={onViewClaims}>
             View All Claims →
@@ -64,41 +64,41 @@ function DashboardPage({ user, onLogout, onViewClaims, onNavigate, currentPage }
             onClick={() => onNavigate('claims', 'All')}
           />
           <KPICard
-            title="Active Regions"
-            value={stats.regionCount}
-            icon="🌍"
-            gradient={['#8b5cf6', '#a78bfa']}
-            trend={{ positive: true, percent: 25 }}
-            comparison="worldwide"
-            onClick={() => onNavigate('claims', 'All')}
+            title="Pending Claims"
+            value={stats.pendingClaims}
+            icon="⏳"
+            gradient={['#f59e0b', '#fb923c']}
+            trend={{ positive: false, percent: 0 }}
+            comparison="accumulated"
+            onClick={() => onNavigate('claims', 'Pending')}
           />
         </div>
 
         {/* Regional Map */}
         <ClaimsByRegionMap />
 
-        {/* Claims by Status KPIs */}
+        {/* Claims by Status — Global */}
         <div className="status-kpi-card">
-          <h3>Claims by Status ✦</h3>
+          <h3>Global Claims by Status ✦</h3>
           <div className="status-kpi-grid">
             <div className="status-kpi-item" style={{ borderColor: '#6366f1' }}>
               <span className="status-kpi-icon">📋</span>
-              <span className="status-kpi-value">3</span>
+              <span className="status-kpi-value">{globalStats.open}</span>
               <span className="status-kpi-label">Open</span>
             </div>
             <div className="status-kpi-item" style={{ borderColor: '#10b981' }}>
               <span className="status-kpi-icon">✅</span>
-              <span className="status-kpi-value">2</span>
+              <span className="status-kpi-value">{globalStats.closed}</span>
               <span className="status-kpi-label">Closed</span>
             </div>
             <div className="status-kpi-item" style={{ borderColor: '#f59e0b' }}>
               <span className="status-kpi-icon">⏳</span>
-              <span className="status-kpi-value">2</span>
+              <span className="status-kpi-value">{globalStats.pending}</span>
               <span className="status-kpi-label">Pending</span>
             </div>
             <div className="status-kpi-item" style={{ borderColor: '#8b5cf6' }}>
               <span className="status-kpi-icon">⏸️</span>
-              <span className="status-kpi-value">1</span>
+              <span className="status-kpi-value">{globalStats.onHold}</span>
               <span className="status-kpi-label">On Hold</span>
             </div>
           </div>

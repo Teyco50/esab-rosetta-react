@@ -53,7 +53,7 @@ export const mockClaims = [
   {
     id: 'CLM-004',
     type: 'Technical Support',
-    status: 'Open',
+    status: 'Pending',
     site: 'Tokyo',
     product: 'Control Panel',
     reportedBy: 'Hiroshi Tanaka',
@@ -121,7 +121,7 @@ export const mockClaims = [
   {
     id: 'CLM-008',
     type: 'Technical Support',
-    status: 'Open',
+    status: 'Pending',
     site: 'Buenos Aires',
     product: 'Power Supply',
     reportedBy: 'Diego Martinez',
@@ -138,7 +138,7 @@ export const mockClaims = [
   {
     id: 'CLM-009',
     type: 'Material Defect',
-    status: 'Open',
+    status: 'On Hold',
     site: 'Sydney',
     product: 'Spares Kit',
     reportedBy: 'Michael Brown',
@@ -181,14 +181,20 @@ export const getClaimById = (id) => {
 
 export const getDashboardStats = (username) => {
   const userClaims = getClaimsByUser(username)
-  const openClaims = userClaims.filter(c => c.status === 'Open').length
-  const closedClaims = userClaims.filter(c => c.status === 'Closed').length
-
   return {
-    openClaims,
-    closedClaims,
-    ytdClaims: userClaims.length,
-    regionCount: 4
+    openClaims:    userClaims.filter(c => c.status === 'Open').length,
+    closedClaims:  userClaims.filter(c => c.status === 'Closed').length,
+    pendingClaims: userClaims.filter(c => c.status === 'Pending').length,
+    ytdClaims:     userClaims.length,
+  }
+}
+
+export const getGlobalStats = () => {
+  return {
+    open:    mockClaims.filter(c => c.status === 'Open').length,
+    closed:  mockClaims.filter(c => c.status === 'Closed').length,
+    pending: mockClaims.filter(c => c.status === 'Pending').length,
+    onHold:  mockClaims.filter(c => c.status === 'On Hold').length,
   }
 }
 
