@@ -187,14 +187,27 @@
 @media (max-width: 768px) {
   .login-container {
     grid-template-columns: 1fr;
+    min-height: 100dvh;
   }
 
-  .login-left {
-    display: none;
+  .login-left { display: none; }
+
+  .login-right {
+    padding: 20px 16px;
+    align-items: flex-start;
+    overflow-y: auto;
   }
 
   .login-card {
     max-width: 100%;
-    padding: 30px;
+    padding: 28px 20px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
   }
+
+  .login-card h2 { font-size: 22px; margin-bottom: 20px; }
+}
+
+@media (max-width: 400px) {
+  .demo-hint { display: none; }
+  .demo-email { font-size: 10px; }
 }
